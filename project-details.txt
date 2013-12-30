@@ -1,0 +1,15 @@
+Web site:
+html5 + css3 + websocket + jquery
+
+validation-client:
+"Qt Widgets Application" on picture it's: "Add the funds to account"
+
+Other server application:
+Qt Console Application
+
+Skill learned:
+- Bandwith/RTT/lantency optimisation
+- New web tech
+- Optmisation (valgrind)
+- Code quality (valgrind)
+- Security (TLS, auth)
