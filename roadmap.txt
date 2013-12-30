@@ -1,0 +1,31 @@
+0.1:
+pass order to sell bitcoin:
+- Quantity of bitcoin owned
+- Quantity to sell
+- Price to sell
+pass order to Buy bitcoin:
+- Quantity of euro owned
+- Quantity to how many euro to use
+- Price to buy
+Validation partially the order:
+- If you buy 10 bitcoin to 500€, and other sell 4 bitcoin to 490, 3 bitcoin to 500 and 99 bitcoin to 501, then:
+-- You buy 4 bitcoin to 490, 3 bitcoin to 500, and remain 5 bitcoin in trading
+option to automatic widthdraw the fund, else manual validation
+option to automatic deposit the fund, else manual validation
+option to delay before use fund
+widthdraw the fund
+deposit the fund
+Graphic to see who trade what
+Fake bank/bitcoin plugin
+In mysql/db can have multiple currency/crypto currency
+
+Technical part:
+Use thread for mysql write (delete/update/insert)
+Read and load all the trade in mysql at the startup
+Use the Qt Signals/Slots
+
+0.2:
+Second time:
+security: yubikey, papier, google auth
+Ticket to have support to the user with mail support (just cmmand?)
+Support pull and push funds in C/C++/php for pull
