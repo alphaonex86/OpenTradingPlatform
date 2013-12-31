@@ -1,0 +1,137 @@
+html,
+body,
+h1,
+p
+{
+	/* Reset default style */
+	border:0;
+	margin:0;
+	padding:0;
+}
+
+html,
+body
+{
+	/* Apply our style */
+	top:0;
+	position:absolute;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+
+a{
+	text-decoration: none;
+}
+
+.cpu,
+.stats-accordeon h1,
+#stats-windows,
+#setting-bar a,
+#menu-panel a
+{
+	/* transitions */
+	transition: background 0.4s,
+				border 0.4s,
+				bottom 0.4s,
+				color 0.4s, 
+				left 0.4s,
+				margin 0.4s,
+				opacity 0.4s,
+				padding 0.4s,
+				right 0.4s,
+				top 0.4s;
+}
+
+/* Stats panel */
+#stats-windows
+{
+	position:absolute;
+	width:200px;
+	right:0px;
+	overflow:hidden;
+	border-left: 1px solid #ccc;
+}
+
+.stats-accordeon h1
+{
+	height: 25px;
+	font-size: 14px;
+	background: #333;
+	color: #fff;
+	display:block;
+	padding: 10px 0 10px 30px;
+}
+
+.stats-accordeon h1:hover{
+	background: #222;
+}
+
+.stats-accordeon p
+{
+	height: 15px;
+	font-size: 12px;
+	display:block;
+	padding: 5px 0 5px 30px;
+}
+
+#main-windows{
+	/* Stats pannel reserved */
+	margin-right: 200px;
+}
+
+/* top bar */
+#setting-bar
+{
+	padding-top: 5px;
+	height: 30px;
+	border-bottom: 1px solid #c8c8c8;
+}
+
+#setting-bar-left
+{
+	float: left;
+	margin-left: 20px;
+}
+
+#setting-bar-right
+{
+	float: right;
+	margin-right: 20px;
+}
+
+#setting-bar a{
+	color:#111;
+	border-bottom: 1px solid #fff;
+}
+
+#setting-bar a:hover{
+	border-bottom: 1px solid #bbb;
+}
+
+/* Sub-Menu (depending of the pages */
+#menu-panel{
+	display:inline-block;
+	height:100%;
+	width:170px;
+	padding-left:50px;
+	padding-top:50px;
+}
+
+#menu-panel a{
+	display:block;
+	padding-left:20px;
+	padding-top:10px;
+	height:30px;
+	width:120px;
+}
+
+#menu-panel a:hover{
+	background:#79d;
+}
+
+/* Main elements */
+#page-display
+{
+	display:inline-block;
+}
