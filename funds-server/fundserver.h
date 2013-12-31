@@ -8,17 +8,17 @@ class FundServer: public QObject
     Q_OBJECT
 
 public:
-
-
     FundServer();
 
-    void startServer(int port);
-
+    bool startServer(int port);
+    QString readString(QTcpSocket* socket);
+    bool loginValid(QString user, QString password);
 private:
     QTcpServer* server;
+    void askNewConnection(QTcpSocket* socket);
 
 public slots:
-    void on_newConnection();
+    void onNewConnection();
 };
 
 #endif // FUNDSERVER_H
