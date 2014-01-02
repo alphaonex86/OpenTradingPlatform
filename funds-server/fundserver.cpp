@@ -35,7 +35,7 @@ QString FundServer::readString(QTcpSocket *socket)
     QByteArray readData = socket->read(1);
 
     // String data
-    return QString(socket->read(readData[0]));
+    return QString::fromUtf8(socket->read(readData[0]));
 }
 
 void FundServer::askNewConnection(QTcpSocket* socket)
