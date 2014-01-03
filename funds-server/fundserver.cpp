@@ -7,11 +7,11 @@ FundServer::FundServer(){
 
 }
 
-bool FundServer::startServer(int port)
+bool FundServer::startServer(const QHostAddress &address, int port)
 {
     this->server = new QTcpServer(this);
-    connect(server, SIGNAL(newConnection()), this, SLOT(on_newConnection()));
-    if (!server->listen(QHostAddress::Any, port)){
+    connect(server, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
+    if (!server->listen(address, port)){
         qDebug() << "Failed to Listen";
         return false;
     }
@@ -50,8 +50,6 @@ void FundServer::askNewConnection(QTcpSocket* socket)
         socket->abort();
         return;
     }
-
-
 }
 
 bool FundServer::loginValid(QString user, QString password)

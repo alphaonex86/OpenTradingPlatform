@@ -16,7 +16,7 @@ void FundsSocket::connectToHost(const QHostAddress &address, quint16 port)
 
 void FundsSocket::sendConnectionData(QString login, QString password)
 {
-    if(this->socket->state() == QTcpSocket::BoundState){
+    if(this->socket->state() == QTcpSocket::ConnectedState){
         this->writeString(login);
         this->writeString(password);
     }else{
@@ -30,8 +30,6 @@ void FundsSocket::onConnected()
     if(!this->login.isEmpty() && !this->password.isEmpty()){
         this->writeString(this->login);
         this->writeString(this->password);
-        this->login = QString();
-        this->password = QString();
     }
     qDebug() << "FundsServer::onConnected";
 }
@@ -43,7 +41,7 @@ void FundsSocket::onDisconnected()
 
 void FundsSocket::writeString(QString str)
 {
-    if(this->socket->state() != QTcpSocket::BoundState)
+    if(this->socket->state() != QTcpSocket::ConnectedState)
         qDebug() << "Writing without bound";
     QByteArray arr = str.toUtf8();
     QByteArray sizearr;

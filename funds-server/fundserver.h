@@ -10,7 +10,7 @@ class FundServer: public QObject
 public:
     FundServer();
 
-    bool startServer(int port);
+    bool startServer(const QHostAddress &address, int port);
     QString readString(QTcpSocket* socket);
     bool loginValid(QString user, QString password);
 private:
