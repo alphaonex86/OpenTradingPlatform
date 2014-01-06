@@ -1,18 +1,13 @@
 #ifndef BANKINTERFACE_H
 #define BANKINTERFACE_H
 
-// TODO: create a class for it
-class Account;
-
 class BankInterface
 {
-public:
-    virtual ~BankInterface();
-
-    virtual bool withdraw(double amount);
-    virtual bool deposit(double amount);
+public slots:
+    virtual bool withdraw(double amount) = 0;
+    virtual bool deposit(double amount)  = 0;
 };
 
-Q_DECLARE_INTERFACE(BankInterface, "org.openTradingPlatform.bank.interface")
+Q_DECLARE_INTERFACE(BankInterface, "org.openTradingPlatform.plugin.bank.interface")
 
 #endif // BANKINTERFACE_H

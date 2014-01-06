@@ -6,16 +6,17 @@
 #include <QObject>
 
 class QTcpSocket;
+class FundServer;
 
-class fundsClient: public QObject
+class FundsClient: public QObject
 {
     Q_OBJECT
 
 public:
-    explicit fundsClient(QObject *parent = 0);
-    explicit fundsClient(QTcpSocket* socket, QObject *parent = 0);
+    explicit FundsClient(FundServer* server,QObject *parent = 0);
+    explicit FundsClient(FundServer* server,QTcpSocket* socket, QObject *parent = 0);
 
-    virtual ~fundsClient();
+    virtual ~FundsClient();
 
     // setter and getter
 
@@ -29,11 +30,6 @@ public:
      * @return Return the client socket
      */
     QTcpSocket* getSocket();
-
-    /**
-     * @return Packet id or -1 if no packet is being process
-     */
-    void getCurrentPacketId();
 
 public slots:
 
@@ -50,15 +46,23 @@ public slots:
 signals:
 
     /**
-     * @brief Emit a signal when a packet or something is misunderstand
+     * @brief Emit a signal when a command or something is misunderstand
      */
     void corruptedClient();
 
 private:
-    qint16 packetId;
+    bool reading;
+
+    void invalidCommand();
+
+    bool buy(QStringList arg);
+    bool sell(QStringList arg);
 
     // The socket used
     QTcpSocket* socket;
+
+    // Main server
+    FundServer* server;
 };
 
 #endif // FUNDSCONNECTION_H

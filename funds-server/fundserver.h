@@ -21,7 +21,6 @@ class FundServer: public QObject
 public:
     explicit FundServer(QObject *parent = 0);
 
-    QString readString(QTcpSocket* socket);
     bool startServer(const QHostAddress &address, quint16 port);
     void loadConfig(QString configPath);
 

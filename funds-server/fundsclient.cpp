@@ -2,46 +2,71 @@
 
 #include "fundsclient.h"
 
-fundsClient::fundsClient(QObject *parent):
+FundsClient::FundsClient(FundServer* server, QObject *parent):
     QObject(parent)
 {
+    this->server = server;
     this->socket = NULL;
 }
 
-fundsClient::fundsClient(QTcpSocket* socket, QObject *parent):
+FundsClient::FundsClient(FundServer* server, QTcpSocket* socket, QObject *parent):
     QObject(parent)
 {
+    this->server = server;
     this->setSocket(socket);
 }
 
-fundsClient::~fundsClient()
+FundsClient::~FundsClient()
 {
     delete this->socket;
 }
 
 // SLOTS
-void fundsClient::abort(){
+void FundsClient::abort(){
     this->socket->abort();
 }
 
-void fundsClient::read(){
+void FundsClient::read(){
     // Ignore, already processing
-    if(this->packetId != -1)
+    if(this->reading)
         return;
+
+    this->reading = true;
 
     if(this->socket->bytesAvailable() == 0)
     {
         qWarning() << "fundsClient::read() called without bytes Available to be read";
+        this->reading = false;
+        return;
     }
 
-    // Read the first bytes to know the packet id
-    QByteArray id = this->socket->read(1);
-    this->packetId = id[0];
+    // 1 line = 1 command
+    QByteArray line = this->socket->readLine();
 
-    /// @todo seek the data and parse the packet
+    // Command string
+    QString cmd = QString(line);
+
+    // Command argument (including command name)
+    QStringList arg = cmd.split(' ');
+
+    if(arg.size() < 1){ // Error when parsing the command
+        this->invalidCommand();
+        return;
+    }
+
+    if(arg[0] == "buy"){ // buy bitcoin
+        if(!this->buy(arg)){
+            return this->invalidCommand();
+        }
+    }
+    else if(arg[0] == "sell"){ // sell bitcoin
+        if(!this->sell(arg)){
+            return this->invalidCommand();
+        }
+    }
 
     // reset
-    this->packetId = 0;
+    this->reading = false;
 
     if(this->socket->bytesAvailable() > 0){
         // read next packet
@@ -49,14 +74,61 @@ void fundsClient::read(){
     }
 }
 
+// Command
+bool FundsClient::buy(QStringList arg)
+{
+    /**
+     * - Who
+     * - Quantity of bitcoin owned
+     * - Quantity to sell
+     * - Price to sell
+     */
+    if(arg.size() != 5){
+        return false;
+    }
+
+    bool ownedOk, quantityOk, priceOk = true;
+
+    quint64 who = arg[1].toInt(&ownedOk);
+    double bitcoinOwned = arg[2].toDouble(&ownedOk);
+    double quantity = arg[3].toDouble(&quantityOk);
+    double price = arg[4].toDouble(&priceOk);
+
+    if(!ownedOk || !quantityOk || !priceOk){
+        return false;
+    }
+
+    return true;
+}
+
+bool FundsClient::sell(QStringList arg)
+{
+    /**
+     * - Who
+     * - Quantity of euro owned
+     * - Quantity to how many euro to use
+     * - Price to buy
+     */
+    if(arg.size() != 5){
+        return false;
+    }
+    return true;
+}
+
+void FundsClient::invalidCommand()
+{
+    emit corruptedClient();
+    this->reading = false;
+}
+
 // SETTER and GETTER
-void fundsClient::setSocket(QTcpSocket* socket)
+void FundsClient::setSocket(QTcpSocket* socket)
 {
     connect(socket, SIGNAL(readyRead()), this, SLOT(abort()) );
     this->socket = socket;
 }
 
-QTcpSocket* fundsClient::getSocket()
+QTcpSocket* FundsClient::getSocket()
 {
     return this->socket;
 }
