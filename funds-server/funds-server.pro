@@ -17,7 +17,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    fundserver.cpp
+    fundserver.cpp \
+    fundsclient.cpp \
+    packet.cpp
 
 HEADERS += \
-    fundserver.h
+    fundserver.h \
+    bitcoininterface.h \
+    bankinterface.h \
+    fundsclient.h \
+    packet.h

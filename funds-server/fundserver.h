@@ -1,24 +1,42 @@
 #ifndef FUNDSERVER_H
 #define FUNDSERVER_H
 
-#include <QTcpServer>
+#include <QObject>
+
+class QTcpServer;
+class QTcpSocket;
+class QHostAddress;
+class QPluginLoader;
+
 
 class FundServer: public QObject
 {
     Q_OBJECT
 
+    // Plugin which may/should be loaded
+    enum FundsPluginType { Bank,
+                           Bitcoin,
+                           Other
+                         };
 public:
-    FundServer();
+    explicit FundServer(QObject *parent = 0);
 
-    bool startServer(const QHostAddress &address, int port);
     QString readString(QTcpSocket* socket);
-    bool loginValid(QString user, QString password);
-private:
-    QTcpServer* server;
-    void askNewConnection(QTcpSocket* socket);
+    bool startServer(const QHostAddress &address, quint16 port);
+    void loadConfig(QString configPath);
 
 public slots:
     void onNewConnection();
+    bool loadPlugin(QString path, FundsPluginType type);
+
+protected:
+    bool loadPluginPrivate(QPluginLoader* loader, QString path);
+    void askNewConnection(QTcpSocket* socket);
+
+private:
+    QTcpServer* server;
+    QPluginLoader* bitcoinPlugin;
+    QPluginLoader* bankPlugin;
 };
 
 #endif // FUNDSERVER_H

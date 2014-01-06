@@ -1,7 +1,9 @@
 #ifndef FUNDSSOCKET_H
 #define FUNDSSOCKET_H
 
-#include <QTcpSocket>
+#include <QObject>
+
+class QTcpSocket;
 
 class FundsSocket: public QObject
 {
@@ -21,10 +23,7 @@ public slots:
 
 private:
     void writeString(QString str);
-
     QTcpSocket* socket;
-    QString login;
-    QString password;
 
 };
 

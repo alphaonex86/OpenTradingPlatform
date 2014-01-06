@@ -1,6 +1,7 @@
 #include "fundssocket.h"
 
 #include <QByteArray>
+#include <QTcpSocket>
 
 FundsSocket::FundsSocket()
 {
@@ -16,21 +17,11 @@ void FundsSocket::connectToHost(const QHostAddress &address, quint16 port)
 
 void FundsSocket::sendConnectionData(QString login, QString password)
 {
-    if(this->socket->state() == QTcpSocket::ConnectedState){
-        this->writeString(login);
-        this->writeString(password);
-    }else{
-        this->login = login;
-        this->password = password;
-    }
+    // Plugin here
 }
 
 void FundsSocket::onConnected()
 {
-    if(!this->login.isEmpty() && !this->password.isEmpty()){
-        this->writeString(this->login);
-        this->writeString(this->password);
-    }
     qDebug() << "FundsServer::onConnected";
 }
 

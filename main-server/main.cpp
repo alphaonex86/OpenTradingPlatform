@@ -9,7 +9,6 @@ int main(int argc, char *argv[])
 
     FundsSocket* socket = new FundsSocket();
     socket->connectToHost(QHostAddress::LocalHost, 64542);
-    socket->sendConnectionData("kperh","rhtkpo");
 
     return a.exec();
 }
