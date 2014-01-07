@@ -6,6 +6,7 @@
 
 QT       += core
 QT       += network
+QT       += sql
 
 QT       -= gui
 
@@ -17,9 +18,32 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    fundssocket.cpp
-
-INCLUDEPATH += $$PWD/qtwebsocket-qtwebsocket/QtWebsocket
+    fundssocket.cpp \
+    websockethandle.cpp \
+    QtWebsocket/functions.cpp \
+    QtWebsocket/QTlsServer.cpp \
+    QtWebsocket/QWsFrame.cpp \
+    QtWebsocket/QWsHandshake.cpp \
+    QtWebsocket/QWsServer.cpp \
+    QtWebsocket/QWsSocket.cpp \
+    client.cpp \
+    sqlhandler.cpp \
+    Request/requestrefresh.cpp
 
 HEADERS += \
-    fundssocket.h
+    fundssocket.h \
+    websockethandle.h \
+    QtWebsocket/functions.h \
+    QtWebsocket/QTlsServer.h \
+    QtWebsocket/QWsFrame.h \
+    QtWebsocket/QWsHandshake.h \
+    QtWebsocket/QWsServer.h \
+    QtWebsocket/QWsSocket.h \
+    QtWebsocket/WsEnums.h \
+    client.h \
+    sqlhandler.h \
+    sqldata.h \
+    request.h \
+    Request/request.h \
+    Request/requestrefresh.h
+

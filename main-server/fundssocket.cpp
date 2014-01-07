@@ -15,11 +15,6 @@ void FundsSocket::connectToHost(const QHostAddress &address, quint16 port)
     this->socket->connectToHost(address, port);
 }
 
-void FundsSocket::sendConnectionData(QString login, QString password)
-{
-    // Plugin here
-}
-
 void FundsSocket::onConnected()
 {
     qDebug() << "FundsServer::onConnected";
@@ -35,8 +30,5 @@ void FundsSocket::writeString(QString str)
     if(this->socket->state() != QTcpSocket::ConnectedState)
         qDebug() << "Writing without bound";
     QByteArray arr = str.toUtf8();
-    QByteArray sizearr;
-    sizearr.append(arr.size());
-    this->socket->write(sizearr);
     this->socket->write(arr);
 }

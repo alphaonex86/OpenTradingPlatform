@@ -4,6 +4,12 @@
 		<title> Open Trading Platform </title>
 		<meta charset="utf-8" />
 		<link href="style/style.css" rel="stylesheet" type="text/css" />
+		<!--
+		<script src="script/jquery-1.10.2.min.js"></script>
+		<script src="http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js"></script>
+		<script src="script/jquery.websocket-0.0.1.js"></script>
+		<script src="script/connection.js"></script>
+		-->
 	</head>
 	<body>
 		<div id="stats-windows">
@@ -33,7 +39,25 @@
 					<a href="#"> Menu 2 </a>
 				</div>
 				<div id="page-display">
-					<p> Page loading... </p>
+					<noscript> Enable javascript to see this page </noscript>
+					<section id="content"></section>
+					<input id="message" type="text"/>
+					<script src="http://www.google.com/jsapi"></script>
+					<script>google.load("jquery", "1.3")</script>
+					<script src="http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js"></script>
+					<script src="http://jquery-websocket.googlecode.com/files/jquery.websocket-0.0.1.js"></script>
+					<script>
+					var ws = $.websocket("ws://127.0.0.1:8080/", {
+							open: function(){ $('#content').append('<b>Websocket opened</b><br>');},
+							events: {
+									message: function(e) { $('#content').append(e.data + '<br>') }
+							}
+					});
+					$('#message').change(function(){
+					  ws.send('message', this.value);
+					  this.value = '';
+					});
+					</script>
 				</div>
 			</div>
 		</div>

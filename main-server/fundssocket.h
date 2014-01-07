@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+class QHostAddress;
 class QTcpSocket;
 
 class FundsSocket: public QObject

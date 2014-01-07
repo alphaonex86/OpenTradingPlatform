@@ -16,5 +16,5 @@ bool BitcoinPlugin::sellBitcoin( double bitcoinOwned, double quantity, double pr
 }
 
 #if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(BankPlugin, BankPlugin)
+Q_EXPORT_PLUGIN2(BitcoinPlugin, BitcoinPlugin)
 #endif // QT_VERSION < 0x050000

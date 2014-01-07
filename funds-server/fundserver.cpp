@@ -36,7 +36,7 @@ void FundServer::loadConfig(QString configPath)
     this->loadPlugin(configValue(setting,"plugin/bank",    "plugin/bank.dll").toString(),    Bank);
 
     // Connection data
-    QHostAddress address = QHostAddress(configValue(setting, "server/acceptedAddress", "*").toString());
+    QHostAddress address = QHostAddress(configValue(setting, "server/acceptedAddress", "0.0.0.0").toString());
     if(address.isNull()){ // Invalid address
         address = QHostAddress::Any;
     }
@@ -44,8 +44,6 @@ void FundServer::loadConfig(QString configPath)
     quint16 port = configValue(setting, "server/port", 6542).toUInt();
 
     this->startServer(address, port);
-
-    setting.sync();
 }
 
 bool FundServer::startServer(const QHostAddress &address, quint16 port)
@@ -53,17 +51,17 @@ bool FundServer::startServer(const QHostAddress &address, quint16 port)
     if(!bankPlugin->isLoaded()
             || !bitcoinPlugin->isLoaded()){
         qWarning() << "Plugin aren't loaded correctly";
-        //return false;
+        return false;
     }
 
     this->server = new QTcpServer(this);
 
-    connect(server, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
-
     if (!server->listen(address, port)){
-        qDebug() << "Failed to Listen";
+        qDebug() << "Failed to Listen (port used ?)";
         return false;
     }
+
+    connect(server, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
 
     qDebug() << "Accepted Address"  << address.toString();
     qDebug() << "Listening on port" << port;
@@ -87,7 +85,9 @@ void FundServer::askNewConnection(QTcpSocket* socket)
     // If connection success
     if(true){
         FundsClient* client = new FundsClient(this, socket);
-        client->read();
+        if(socket->bytesAvailable()!=0){
+            client->read();
+        }
     }
 }
 
@@ -97,7 +97,7 @@ template <class T> bool loadPluginTemplate(QPluginLoader *loader, QString path)
     loader->setFileName(path);
     if(loader->load()){
         instance = loader->instance();
-        if(qobject_cast<T*>(instance) == NULL)
+        if(qobject_cast<T>(instance) == NULL)
         {
             loader->unload();
             qDebug() << "Invalid instance" << path;
@@ -110,26 +110,13 @@ template <class T> bool loadPluginTemplate(QPluginLoader *loader, QString path)
     }
 }
 
-bool FundServer::loadPluginPrivate(QPluginLoader *loader, QString path)
-{
-    if(loader == this->bankPlugin){
-        return loadPluginTemplate<BankInterface>(loader, path);
-    }else if(loader == this->bitcoinPlugin){
-        return loadPluginTemplate<BitcoinInterface>(loader, path);
-    }else{
-        return loadPluginTemplate<QObject>(loader, path);
-    }
-}
-
 bool FundServer::loadPlugin(QString path, FundsPluginType type)
 {
     switch (type) {
     case Bitcoin:
-        return this->loadPluginPrivate(bitcoinPlugin, path);
-        break;
+        return loadPluginTemplate<BitcoinInterface*>(bitcoinPlugin, path);
     case Bank:
-        return this->loadPluginPrivate(bitcoinPlugin, path);
-        break;
+        return loadPluginTemplate<BankInterface*>(bankPlugin, path);
     default:
         qDebug() << "Invalid plugin type";
         break;

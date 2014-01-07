@@ -29,7 +29,6 @@ public slots:
     bool loadPlugin(QString path, FundsPluginType type);
 
 protected:
-    bool loadPluginPrivate(QPluginLoader* loader, QString path);
     void askNewConnection(QTcpSocket* socket);
 
 private:

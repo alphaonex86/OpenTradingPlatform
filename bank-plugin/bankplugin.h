@@ -14,7 +14,7 @@ class BankPlugin : public QObject, public BankInterface
     Q_INTERFACES(BankInterface)
 
 public:
-    BankPlugin(QObject* parent = 0);
+    BankPlugin(QObject *parent = 0);
 
     ~BankPlugin();
 
