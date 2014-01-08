@@ -4,8 +4,14 @@
 #include <Qt>
 #include <QString>
 
+/**
+ * @brief For ids
+ */
 typedef quint64 Identity;
 
+/**
+ * @brief The Client's representation in database
+ */
 struct ClientData{
     Identity id;
     QString login;

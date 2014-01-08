@@ -26,10 +26,10 @@ bool SqlHandler::loadConfig(QString filename)
     database =  new QSqlDatabase(QSqlDatabase::addDatabase(getConfigStringValue(config, "database/type", "QMySql")));
 
     database->setConnectOptions(getConfigStringValue(config, "database/connectOptions", ""));
-    database->setHostName(getConfigStringValue(config, "database/host", "localhost"));
-    database->setDatabaseName(getConfigStringValue(config, "database/database", "OpenTradingPlatform"));
-    database->setUserName(getConfigStringValue(config, "database/user", "root"));
-    database->setPassword(getConfigStringValue(config, "database/password", ""));
+    database->setHostName(      getConfigStringValue(config, "database/host",           "localhost"));
+    database->setDatabaseName(  getConfigStringValue(config, "database/database",       "OpenTradingPlatform"));
+    database->setUserName(      getConfigStringValue(config, "database/user",           "root"));
+    database->setPassword(      getConfigStringValue(config, "database/password",       ""));
 
     if(database->open())
     {

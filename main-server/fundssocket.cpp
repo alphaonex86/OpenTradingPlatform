@@ -43,6 +43,7 @@ void FundsSocket::onConnected()
 void FundsSocket::onDisconnected()
 {
     qDebug() << "FundsSocket::onDisconnected";
+    emit onError();
 }
 
 void FundsSocket::writeString(QString str)

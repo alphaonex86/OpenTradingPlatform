@@ -8,9 +8,20 @@
 
 #include "sqldata.h"
 
+/**
+ * @brief Maximum socket by one client
+ */
 #define MAX_CLIENT_SOCKET 2
+
+/**
+ * @brief How many IP allowed by one client
+ */
 #define MAX_CLIENT_IP 1
 
+/**
+ * @brief Class containing all the active socket and the data required by one client
+ * @note Work in progress class
+ */
 class Client : public QObject
 {
     Q_OBJECT
@@ -23,7 +34,14 @@ signals:
 public slots:
 
 private:
+    /**
+     * @brief data about the client
+     */
     ClientData data;
+
+    /**
+     * @brief all socket used by one client
+     */
     QList<QtWebsocket::QWsSocket*> sockets;
 };
 

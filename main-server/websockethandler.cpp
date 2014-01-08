@@ -77,7 +77,7 @@ void WebsocketHandler::processMessage(QString frame)
     }else{
         QString request = obj.value("type").toString();
         if(request == "message"){// test only
-            socket->write(frame);
+            socket->write(frame);// send back the object
         }else if(!this->requestMap.contains(request)){
             qWarning() << tr("Unknow request %1 from").arg(request) << socket->localAddress().toString() << frame;
             socket->abort();
