@@ -1,22 +1,22 @@
-#include "websockethandle.h"
+#include "websockethandler.h"
 
 #include "Request/requestrefresh.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
 
-WebsocketHandle::WebsocketHandle(QObject *parent) :
+WebsocketHandler::WebsocketHandler(QObject *parent) :
     QObject(parent)
 {
 
 }
 
-void WebsocketHandle::addRequest(Request *r)
+void WebsocketHandler::addRequest(Request *r)
 {
     this->requestMap.insert(r->getName(),r);
 }
 
-void WebsocketHandle::createRequest()
+void WebsocketHandler::createRequest()
 {
     foreach(Request* r, requestMap)
     {
@@ -28,7 +28,7 @@ void WebsocketHandle::createRequest()
     addRequest(new RequestRefresh());
 }
 
-void WebsocketHandle::startServer(int port, QtWebsocket::Protocol protocol)
+void WebsocketHandler::startServer(int port, QtWebsocket::Protocol protocol)
 {
     server = new QtWebsocket::QWsServer(this, protocol);
     if (! server->listen(QHostAddress::Any, port))
@@ -43,23 +43,18 @@ void WebsocketHandle::startServer(int port, QtWebsocket::Protocol protocol)
     QObject::connect(server, SIGNAL(newConnection()), this, SLOT(processNewConnection()));
 }
 
-void WebsocketHandle::processNewConnection()
+void WebsocketHandler::processNewConnection()
 {
     QtWebsocket::QWsSocket* clientSocket = server->nextPendingConnection();
 
-    QObject::connect(clientSocket, SIGNAL(frameReceived(QString)), this, SLOT(processMessage(QString)));
-    QObject::connect(clientSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
-    QObject::connect(clientSocket, SIGNAL(pong(quint64)), this, SLOT(processPong(quint64)));
-
-    //clients << clientSocket;
-
-    clientSocket->write(QString("{\"open\":\"Hello World\"}"));
-    clientSocket->write(QString("{\"say\":\"Foo\"}"));
+    connect(clientSocket, SIGNAL(frameReceived(QString)), this, SLOT(processMessage(QString)));
+    connect(clientSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
+    connect(clientSocket, SIGNAL(pong(quint64)), this, SLOT(processPong(quint64)));
 
     std::cout << tr("Client connected").toStdString() << std::endl;
 }
 
-void WebsocketHandle::processMessage(QString frame)
+void WebsocketHandler::processMessage(QString frame)
 {
     QtWebsocket::QWsSocket* socket = qobject_cast<QtWebsocket::QWsSocket*>(sender());
     if (socket == 0)
@@ -81,7 +76,7 @@ void WebsocketHandle::processMessage(QString frame)
         socket->abort("Invalid request form");
     }else{
         QString request = obj.value("type").toString();
-        if(request == "message"){
+        if(request == "message"){// test only
             socket->write(frame);
         }else if(!this->requestMap.contains(request)){
             qWarning() << tr("Unknow request %1 from").arg(request) << socket->localAddress().toString() << frame;
@@ -94,12 +89,12 @@ void WebsocketHandle::processMessage(QString frame)
     }
 }
 
-void WebsocketHandle::processPong(quint64 elapsedTime)
+void WebsocketHandler::processPong(quint64 elapsedTime)
 {
     qDebug() << tr("ping: %1 ms").arg(elapsedTime);
 }
 
-void WebsocketHandle::socketDisconnected()
+void WebsocketHandler::socketDisconnected()
 {
     QtWebsocket::QWsSocket* socket = qobject_cast<QtWebsocket::QWsSocket*>(sender());
     if (socket == 0)
@@ -112,4 +107,14 @@ void WebsocketHandle::socketDisconnected()
     socket->deleteLater();
 
     qDebug() << tr("Client disconnected").toStdString().c_str();
+}
+
+void WebsocketHandler::setSqlHandler(SqlHandler* handler)
+{
+    this->sql = handler;
+}
+
+SqlHandler* WebsocketHandler::getSqlHandler()
+{
+    return this->sql;
 }

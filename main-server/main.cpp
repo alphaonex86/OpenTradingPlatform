@@ -1,18 +1,25 @@
 #include <QCoreApplication>
 #include <QHostAddress>
+#include <QLibrary>
 
 #include "fundssocket.h"
-#include "websockethandle.h"
+#include "websockethandler.h"
+#include "sqlhandler.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
     FundsSocket* socket = new FundsSocket();
-    socket->connectToHost(QHostAddress::LocalHost, 64542);
+    socket->loadConfig("config.ini");
 
-    WebsocketHandle* handle = new WebsocketHandle();
-    handle->startServer(8080, QtWebsocket::Tcp);
+    SqlHandler* sqlHandler = new SqlHandler();
+    sqlHandler->loadConfig("config.ini");
+
+    WebsocketHandler* wsHandler = new WebsocketHandler();
+    wsHandler->createRequest();
+    wsHandler->startServer(8080, QtWebsocket::Tcp);
+    wsHandler->setSqlHandler(sqlHandler);
 
     return a.exec();
 }

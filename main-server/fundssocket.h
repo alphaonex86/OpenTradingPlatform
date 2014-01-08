@@ -12,6 +12,8 @@ class FundsSocket: public QObject
 public:
     FundsSocket();
 
+    bool loadConfig(QString filename);
+
     void connectToHost(const QHostAddress &address, quint16 port);
     void sendConnectionData(QString login, QString password);
 

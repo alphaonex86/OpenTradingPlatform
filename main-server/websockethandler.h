@@ -7,18 +7,22 @@
 #include "QtWebSocket/QWsSocket.h"
 
 #include "sqldata.h"
+#include "sqlhandler.h"
 #include "client.h"
+
 #include "Request/request.h"
 
-class WebsocketHandle : public QObject
+class WebsocketHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit WebsocketHandle(QObject *parent = 0);
-
-    void startServer(int port, QtWebsocket::Protocol protocol);
+    explicit WebsocketHandler(QObject *parent = 0);
 
     void createRequest();
+    void startServer(int port, QtWebsocket::Protocol protocol);
+
+    void setSqlHandler(SqlHandler* handler);
+    SqlHandler* getSqlHandler();
 
 signals:
 
@@ -34,10 +38,12 @@ protected:
 private:
     void addRequest(Request* r);
 
+    SqlHandler* sql;
+
     QtWebsocket::QWsServer* server;
-    QMap<Identity, Client*> clients; // id
-    QMap<QHostAddress, Client*> clientsAddress; // id
-    QMap<QString, Request*> requestMap; // id
+    QMap<Identity, Client*> clients;
+    QMap<QHostAddress, Client*> clientsAddress;
+    QMap<QString, Request*> requestMap;
 };
 
 #endif // WEBSOCKETHANDLE_H
