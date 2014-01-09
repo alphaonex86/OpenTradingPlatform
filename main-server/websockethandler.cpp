@@ -1,6 +1,8 @@
 #include "websockethandler.h"
 
 #include "Request/requestrefresh.h"
+#include "Request/requestbuy.h"
+#include "Request/requestsell.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -26,6 +28,8 @@ void WebsocketHandler::createRequest()
     this->requestMap.clear();
 
     addRequest(new RequestRefresh());
+    addRequest(new RequestBuy());
+    addRequest(new RequestSell());
 }
 
 void WebsocketHandler::startServer(int port, QtWebsocket::Protocol protocol)
@@ -71,19 +75,27 @@ void WebsocketHandler::processMessage(QString frame)
     }
 
     QJsonObject obj = doc.object();
+
     if(!obj.contains("type")){
-        qWarning() << tr("Invalid request from") << socket->localAddress().toString();
+        qWarning() << tr("Invalid request from") << socket->hostAddress().toString();
         socket->abort("Invalid request form");
+
     }else{
         QString request = obj.value("type").toString();
+
         if(request == "message"){// test only
             socket->write(frame);// send back the object
+
         }else if(!this->requestMap.contains(request)){
-            qWarning() << tr("Unknow request %1 from").arg(request) << socket->localAddress().toString() << frame;
+            qWarning() << tr("Unknow request %1 from").arg(request) << socket->hostAddress().toString() << frame;
             socket->abort();
+
         }else{
-            if(!this->requestMap.value(request)->handle(NULL,obj)){
-                socket->abort();
+            try{
+                this->requestMap.value(request)->handle(NULL,obj);
+            }catch(InvalidRequestException e){
+                qWarning() << tr("Invalid request from") << socket->hostAddress().toString();
+                socket->abort(e.what());
             }
         }
     }

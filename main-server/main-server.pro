@@ -19,20 +19,28 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     fundssocket.cpp \
+    client.cpp \
+    sqlhandler.cpp \
+    websockethandler.cpp \
+    configfunctions.cpp \
     QtWebsocket/functions.cpp \
     QtWebsocket/QTlsServer.cpp \
     QtWebsocket/QWsFrame.cpp \
     QtWebsocket/QWsHandshake.cpp \
     QtWebsocket/QWsServer.cpp \
     QtWebsocket/QWsSocket.cpp \
-    client.cpp \
-    sqlhandler.cpp \
     Request/requestrefresh.cpp \
-    websockethandler.cpp \
-    configfunctions.cpp
+    Request/requestsell.cpp \
+    Request/requestbuy.cpp
 
 HEADERS += \
     fundssocket.h \
+    client.h \
+    sqlhandler.h \
+    sqldata.h \
+    request.h \
+    websockethandler.h \
+    configfunctions.h \
     QtWebsocket/functions.h \
     QtWebsocket/QTlsServer.h \
     QtWebsocket/QWsFrame.h \
@@ -40,14 +48,10 @@ HEADERS += \
     QtWebsocket/QWsServer.h \
     QtWebsocket/QWsSocket.h \
     QtWebsocket/WsEnums.h \
-    client.h \
-    sqlhandler.h \
-    sqldata.h \
-    request.h \
     Request/request.h \
     Request/requestrefresh.h \
-    websockethandler.h \
-    configfunctions.h
+    Request/requestsell.h \
+    Request/requestbuy.h
 
 OTHER_FILES += \
     database.sql

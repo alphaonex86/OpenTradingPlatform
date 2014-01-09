@@ -3,8 +3,19 @@
 
 #include <QJsonObject>
 #include <QString>
+#include <QException>
 
 class Client;
+
+/**
+ * @brief Exception throw when an invalid request as being detected
+ */
+class InvalidRequestException: public QException
+{
+    void raise() const { throw *this; }
+    InvalidRequestException *clone() const { return new InvalidRequestException(*this); }
+};
+
 
 class Request
 {

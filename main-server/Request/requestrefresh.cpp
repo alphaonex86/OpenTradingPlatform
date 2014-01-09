@@ -2,8 +2,7 @@
 
 #include "requestrefresh.h"
 
-RequestRefresh::RequestRefresh(QObject *parent) :
-    QObject(parent)
+RequestRefresh::RequestRefresh()
 {
 }
 

@@ -3,7 +3,7 @@ if (window.WebSocket) {
 	
 	customWs = (function(){
 		// Address to connect to
-		var address = "ws://127.0.0.1:8080";
+		var address = "ws://127.0.0.1:8080/request";
 		
 		// Number of attempt done
 		var attempt = 0;
@@ -89,11 +89,66 @@ if (window.WebSocket) {
 			}
 		}
 		
+		// WIP
+		function isLogged()
+		{
+			return true;
+		}
+		
+		// Request
+		function sell(owned, quantity, price)
+		{
+			/**
+			 * pass order to sell bitcoin:
+			 * - Quantity of bitcoin owned
+			 * - Quantity to sell
+			 * - Price to sell
+			 */
+			if(isLogged()){
+				var obj = {
+					type:"sell",
+					owned: owned,
+					quantity: quantity,
+					price: price
+				};
+				return send(obj);
+			}else{
+				return false;
+			}
+		}
+		
+		// Request
+		function buy(owned, quantity, price)
+		{
+			/**
+			 * pass order to Buy bitcoin:
+			 * - Quantity of euro owned
+			 * - Quantity to how many euro to use
+			 * - Price to buy
+			 */
+			if(isLogged()){
+				var obj = {
+					type:"buy",
+					owned: owned,
+					quantity: quantity,
+					price: price
+				};
+				return send(obj);
+			}else{
+				return false;
+			}
+		}
+		
 		connect();
 		
 		return {
+			// Direct websocket action
 			send:send,
-			getWs:getWebsocket
+			getWs:getWebsocket,
+			
+			// Possible request
+			buy:  buy,
+			sell: sell
 		};
 	})();
 }else{
