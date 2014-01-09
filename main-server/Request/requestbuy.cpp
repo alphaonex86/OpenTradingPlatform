@@ -2,6 +2,8 @@
 
 #include "requestbuy.h"
 
+#include "client.h"
+
 RequestBuy::RequestBuy()
 {
 }
@@ -17,7 +19,7 @@ QString RequestBuy::getName()
 
 bool RequestBuy::handle(Client *cl, QJsonObject arg)
 {
-    if(cl == NULL || arg.size()!=4){
+    if((cl == NULL || !cl->isLogged() ) || arg.size()!=4){
         // Require login and 3 argument
         throw InvalidRequestException();
     }

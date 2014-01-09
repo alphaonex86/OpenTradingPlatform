@@ -1,6 +1,7 @@
 #include <QSettings>
 #include <QFile>
 #include <QString>
+#include <QDebug>
 
 #include "translationslang.h"
 
@@ -27,14 +28,19 @@ bool TranslationsLang::loadConfig(QString path)
     }
 
     QString str;
+    QString value;
     QFile stringFile;
 
     foreach(str, config->allKeys()){
-        stringFile.setFileName(str);
-        if(stringFile.open(QFile::ReadWrite)){
-            this->setString(str, QString::fromUtf8(stringFile.readAll()));
+        value = config->value(str).toString();
+        stringFile.setFileName(value);
+
+        if(stringFile.open(QFile::ReadOnly)){
+            this->setString(str,
+                            QString::fromUtf8(stringFile.readAll())
+            );
         }else{
-            this->setString(str, config->value(str).toString());
+            this->setString(str, value);
         }
     }
 

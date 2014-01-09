@@ -18,6 +18,10 @@
  */
 #define MAX_CLIENT_IP 1
 
+
+class TranslationsLang;
+class WebsocketHandler;
+
 /**
  * @brief Class containing all the active socket and the data required by one client
  * @note Work in progress class
@@ -32,9 +36,26 @@ public:
     bool isLogged();
     void logIn();
     void logOut();
+
+    void addSocket(QtWebsocket::QWsSocket *socket);
+
+    WebsocketHandler* getWebsocketHandler();
+    void setWebsocketHandler(WebsocketHandler* handler);
+
+    TranslationsLang* getLang();
+    void setLang(TranslationsLang* lang);
+
+    bool needDelete();
+
 signals:
+    void frameReceived(QtWebsocket::QWsSocket* socket, QString frame);
+    void disconnected(QtWebsocket::QWsSocket* socket);
+    void pong(QtWebsocket::QWsSocket* socket, quint64 elaspedTime);
 
 public slots:
+    void processMessage(QString frame);
+    void socketDisconnected();
+    void processPong(quint64 elaspedTime);
 
 private:
     /**
@@ -48,9 +69,24 @@ private:
     bool _logged;
 
     /**
+     * @brief actual lang used by the client
+     */
+    TranslationsLang* _lang;
+
+    /**
      * @brief all socket used by one client
      */
     QList<QtWebsocket::QWsSocket*> sockets;
+
+    /**
+     * @brief Manager of all client using websocket
+     */
+    WebsocketHandler* _handler;
+
+    /**
+     * @brief need to be deleted
+     */
+    bool _needDelete;
 };
 
 #endif // CLIENT_H

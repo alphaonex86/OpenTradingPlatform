@@ -39,6 +39,7 @@ bool TranslationManager::loadConfig(QString filename)
         filepath = config->value(code).toString();
 
         TranslationsLang* lang = new TranslationsLang();
+
         if(lang->loadConfig(filepath))
         {
             lang->setCode(code);
@@ -53,7 +54,6 @@ bool TranslationManager::loadConfig(QString filename)
     }
 
     delete config;
-
     return true;
 }
 
@@ -95,7 +95,11 @@ void TranslationManager::removeLang(QString lang_code)
 
 TranslationsLang* TranslationManager::getLang(QString lang_code)
 {
-    return _translations.value(lang_code, _defaultLang);
+    if(_translations.contains(lang_code)){
+        return _translations.value(lang_code);
+    }else{
+        return NULL;
+    }
 }
 
 void TranslationManager::setLang(QString lang_code, TranslationsLang *lang)

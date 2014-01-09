@@ -62,19 +62,19 @@ public slots:
      * @note will be reworked
      * @param message
      */
-    void processMessage(QString message);
+    void processMessage(QtWebsocket::QWsSocket* socket, QString message);
 
     /**
      * @brief testing stuff
      * @param elapsedTime
      */
-    void processPong(quint64 elapsedTime);
+    void processPong(QtWebsocket::QWsSocket* socket, quint64 elapsedTime);
 
     /**
      * @brief webSocket disconnected
      * @note will be reworked
      */
-    void socketDisconnected();
+    void socketDisconnected(QtWebsocket::QWsSocket* socket);
 
 protected:
     /**
@@ -108,6 +108,11 @@ private:
      * @brief The server for web socket
      */
     QtWebsocket::QWsServer* server;
+
+    /**
+     * @brief For all client who aren't logged yet
+     */
+    QList<Client*> _guestClients;
 
     /**
      * @brief Used to get fastly client using their id

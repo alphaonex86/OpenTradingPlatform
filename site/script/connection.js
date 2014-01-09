@@ -59,6 +59,7 @@ if (window.WebSocket) {
 		function reconnect(){
 			if(attempt <3){
 				attempt ++;
+				console.log("Websocket >> Trying to reconnect...");
 				connect();
 			}
 		}
@@ -105,19 +106,17 @@ if (window.WebSocket) {
 			 * - Price to sell
 			 */
 			if(isLogged()){
-				var obj = {
+				return send({
 					type:"sell",
 					owned: owned,
 					quantity: quantity,
 					price: price
-				};
-				return send(obj);
+				});
 			}else{
 				return false;
 			}
 		}
 		
-		// Request
 		function buy(owned, quantity, price)
 		{
 			/**
@@ -127,13 +126,28 @@ if (window.WebSocket) {
 			 * - Price to buy
 			 */
 			if(isLogged()){
-				var obj = {
+				return send({
 					type:"buy",
 					owned: owned,
 					quantity: quantity,
 					price: price
-				};
-				return send(obj);
+				});
+			}else{
+				return false;
+			}
+		}
+		
+		function setLang(code)
+		{
+			/**
+			 * pass order to change the lang of a client:
+			 * - code of the lang
+			 */
+			if(isLogged()){
+				return send({
+					type:"lang",
+					lang: code
+				});
 			}else{
 				return false;
 			}
@@ -147,8 +161,9 @@ if (window.WebSocket) {
 			getWs:getWebsocket,
 			
 			// Possible request
-			buy:  buy,
-			sell: sell
+			buy:     buy,
+			sell:    sell,
+			setLang: setLang
 		};
 	})();
 }else{

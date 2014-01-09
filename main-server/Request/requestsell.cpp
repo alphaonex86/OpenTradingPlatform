@@ -2,6 +2,8 @@
 
 #include "requestsell.h"
 
+#include "client.h"
+
 RequestSell::RequestSell()
 {
 }
@@ -17,7 +19,7 @@ QString RequestSell::getName()
 
 bool RequestSell::handle(Client *cl, QJsonObject arg)
 {
-    if(cl == NULL || arg.size()!=4){
+    if((cl == NULL || !cl->isLogged()) || arg.size()!=4){
         // Require login and 3 argument
         throw InvalidRequestException();
     }

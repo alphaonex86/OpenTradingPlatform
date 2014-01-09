@@ -21,9 +21,10 @@ int main(int argc, char *argv[])
     sqlHandler->loadConfig("config.ini");
 
     WebsocketHandler* wsHandler = new WebsocketHandler();
+    wsHandler->setTranslationManager(langManager);
+    wsHandler->setSqlHandler(sqlHandler);
     wsHandler->createRequest();
     wsHandler->startServer(8080, QtWebsocket::Tcp);
-    wsHandler->setSqlHandler(sqlHandler);
 
     return a.exec();
 }
