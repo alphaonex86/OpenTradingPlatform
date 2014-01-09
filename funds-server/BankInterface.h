@@ -1,6 +1,10 @@
 #ifndef BANKINTERFACE_H
 #define BANKINTERFACE_H
 
+/**
+ * @brief The Interface required to communicate with the bank
+ * @note [WIP] used by plugin
+ */
 class BankInterface
 {
 public slots:

@@ -1,6 +1,10 @@
 #ifndef BITCOININTERFACE_H
 #define BITCOININTERFACE_H
 
+/**
+ * @brief The Interface required to make bitcoin wallet
+ * @note [WIP] used by plugin
+ */
 class BitcoinInterface
 {
 public slots:

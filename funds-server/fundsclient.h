@@ -1,13 +1,14 @@
 #ifndef FUNDSCONNECTION_H
 #define FUNDSCONNECTION_H
 
-#define PACKET_TIMEOUT 5000
-
 #include <QObject>
 
 class QTcpSocket;
 class FundServer;
 
+/**
+ * @brief The represente one socket/client connected to the server
+ */
 class FundsClient: public QObject
 {
     Q_OBJECT
@@ -55,6 +56,7 @@ private:
 
     void invalidCommand();
 
+    // Command available
     bool buy(QStringList arg);
     bool sell(QStringList arg);
 

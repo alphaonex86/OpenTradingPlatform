@@ -21,11 +21,33 @@ class FundServer: public QObject
 public:
     explicit FundServer(QObject *parent = 0);
 
+    /**
+     * @brief start listening on a port and await client
+     * @param address Address accepted
+     * @param port port used to connect
+     * @return If the server started
+     */
     bool startServer(const QHostAddress &address, quint16 port);
+
+    /**
+     * @brief load a config file and start the server using the parameters, and load required plugin
+     * @param configPath the path to the config's file
+     * @see startServer
+     */
     void loadConfig(QString configPath);
 
 public slots:
+    /**
+     * @brief every time a new socket connected to the server, this function is called
+     */
     void onNewConnection();
+
+    /**
+     * @brief load a plugin using a path
+     * @param path the plugin's path
+     * @param type which kind of plugin is it
+     * @return if the plugin successfuly loaded
+     */
     bool loadPlugin(QString path, FundsPluginType type);
 
 protected:
