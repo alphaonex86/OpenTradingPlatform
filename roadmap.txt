@@ -18,6 +18,11 @@ deposit the fund
 Graphic to see who trade what
 Fake bank/bitcoin plugin
 In mysql/db can have multiple currency/crypto currency
+Registrer:
+1) Email validation
+2) Proof of residence
+3) only after can trade/fund the account
+
 
 Technical part:
 Use thread for mysql write (delete/update/insert)
