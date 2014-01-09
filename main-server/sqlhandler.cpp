@@ -55,7 +55,7 @@ ClientData SqlHandler::getClient(QString login, QString password)
 
     if(!query->exec() || query->size() != 1)
     {
-        throw InvalidInputException();
+        throw SqlInvalidInputException();
     }
 
     query->first();
