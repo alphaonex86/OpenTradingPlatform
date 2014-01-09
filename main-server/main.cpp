@@ -5,10 +5,14 @@
 #include "fundssocket.h"
 #include "websockethandler.h"
 #include "sqlhandler.h"
+#include "translationmanager.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+
+    TranslationManager* langManager = new TranslationManager();
+    langManager->loadConfig("lang.ini");
 
     FundsSocket* socket = new FundsSocket();
     socket->loadConfig("config.ini");

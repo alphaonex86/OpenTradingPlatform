@@ -12,6 +12,9 @@
 
 #include "Request/request.h"
 
+class QSettings;
+class TranslationManager;
+
 class WebsocketHandler : public QObject
 {
     Q_OBJECT
@@ -42,6 +45,9 @@ public:
      * @see setSqlHandler
      */
     SqlHandler* getSqlHandler();
+
+    void setTranslationManager(TranslationManager* langManager);
+    TranslationManager* getTranslationManager();
 
 signals:
 
@@ -93,6 +99,10 @@ private:
      */
     SqlHandler* sql;
 
+    /**
+     * @brief Configuration (object)
+     */
+    QSettings* config;
 
     /**
      * @brief The server for web socket
@@ -113,6 +123,8 @@ private:
      * @brief Associate a request with their name
      */
     QMap<QString, Request*> requestMap;
+
+    TranslationManager* _langManager;
 };
 
 #endif // WEBSOCKETHANDLE_H

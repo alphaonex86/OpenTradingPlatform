@@ -29,6 +29,9 @@ public:
     explicit Client(QObject *parent = 0);
     explicit Client(const ClientData &data, QObject *parent = 0);
 
+    bool isLogged();
+    void logIn();
+    void logOut();
 signals:
 
 public slots:
@@ -38,6 +41,11 @@ private:
      * @brief data about the client
      */
     ClientData data;
+
+    /**
+     * @brief If client is logged
+     */
+    bool _logged;
 
     /**
      * @brief all socket used by one client

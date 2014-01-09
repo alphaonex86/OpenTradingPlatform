@@ -31,7 +31,10 @@ SOURCES += main.cpp \
     QtWebsocket/QWsSocket.cpp \
     Request/requestrefresh.cpp \
     Request/requestsell.cpp \
-    Request/requestbuy.cpp
+    Request/requestbuy.cpp \
+    smtp.cpp \
+    translationmanager.cpp \
+    translationslang.cpp
 
 HEADERS += \
     fundssocket.h \
@@ -51,7 +54,10 @@ HEADERS += \
     Request/request.h \
     Request/requestrefresh.h \
     Request/requestsell.h \
-    Request/requestbuy.h
+    Request/requestbuy.h \
+    smtp.h \
+    translationmanager.h \
+    translationslang.h
 
 OTHER_FILES += \
     database.sql

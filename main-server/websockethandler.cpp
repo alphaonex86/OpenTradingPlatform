@@ -1,16 +1,20 @@
+#include <QSettings>
+#include <QJsonDocument>
+#include <QJsonObject>
+
 #include "websockethandler.h"
 
 #include "Request/requestrefresh.h"
 #include "Request/requestbuy.h"
 #include "Request/requestsell.h"
 
-#include <QJsonDocument>
-#include <QJsonObject>
+
 
 WebsocketHandler::WebsocketHandler(QObject *parent) :
     QObject(parent)
 {
-
+    this->config = new QSettings();
+    _langManager = NULL;
 }
 
 void WebsocketHandler::addRequest(Request *r)
@@ -129,4 +133,14 @@ void WebsocketHandler::setSqlHandler(SqlHandler* handler)
 SqlHandler* WebsocketHandler::getSqlHandler()
 {
     return this->sql;
+}
+
+void WebsocketHandler::setTranslationManager(TranslationManager *langManager)
+{
+    _langManager = langManager;
+}
+
+TranslationManager* WebsocketHandler::getTranslationManager()
+{
+    return _langManager;
 }
