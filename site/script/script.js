@@ -6,6 +6,13 @@ function checkDepencies(){
 	return (!window.WebSocket);
 }
 
+/**
+ *  @brief one page of the server
+ */
+function Page(){}
+
+Page.prototype.constructor = Page;
+
 if(checkDepencies()){
 	alert("Upgrade your browser to see this page");
 }

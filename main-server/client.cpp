@@ -5,6 +5,8 @@ Client::Client(QObject *parent) :
 {
     _logged = false;
     _lang = NULL;
+
+    this->data.rank = 0;
 }
 
 bool Client::isLogged()
@@ -70,4 +72,9 @@ void Client::processPong(quint64 elaspedTime)
 void Client::setWebsocketHandler(WebsocketHandler *handler)
 {
     _handler = handler;
+}
+
+bool Client::hasRight(Right r)
+{
+    return r <= this->data.rank;
 }

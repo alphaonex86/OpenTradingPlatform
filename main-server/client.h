@@ -18,6 +18,21 @@
  */
 #define MAX_CLIENT_IP 1
 
+/// Rank of client
+// No account
+#define GUEST_RIGHT 0
+
+// Account not validated
+#define DEFAULT_RIGHT 1
+
+// Account Validated
+#define VALIDATED_RIGHT 2
+
+// Account with moderator right
+#define MODERATOR_RIGHT 3
+
+// Account with admin right/ Dev account
+#define ADMIN_RIGHT 4
 
 class TranslationsLang;
 class WebsocketHandler;
@@ -29,6 +44,13 @@ class WebsocketHandler;
 class Client : public QObject
 {
     Q_OBJECT
+
+    enum Right {
+                Buy = VALIDATED_RIGHT,
+                Sell = VALIDATED_RIGHT,
+                Connect = DEFAULT_RIGHT,
+                Disconnect = DEFAULT_RIGHT
+               };
 public:
     explicit Client(QObject *parent = 0);
     explicit Client(const ClientData &data, QObject *parent = 0);
@@ -46,6 +68,8 @@ public:
     void setLang(TranslationsLang* lang);
 
     bool needDelete();
+
+    bool hasRight(Right r);
 
 signals:
     void frameReceived(QtWebsocket::QWsSocket* socket, QString frame);
