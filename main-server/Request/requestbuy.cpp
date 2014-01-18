@@ -23,6 +23,6 @@ bool RequestBuy::handle(Client *cl, QJsonObject arg)
         // Require login and 3 argument
         throw InvalidRequestException();
     }
-    qDebug() << "sell";
+    qDebug() << "buy";
     return true;
 }

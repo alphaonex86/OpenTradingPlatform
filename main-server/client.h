@@ -45,13 +45,15 @@ class Client : public QObject
 {
     Q_OBJECT
 
+public:
+
     enum Right {
                 Buy = VALIDATED_RIGHT,
                 Sell = VALIDATED_RIGHT,
                 Connect = DEFAULT_RIGHT,
                 Disconnect = DEFAULT_RIGHT
                };
-public:
+
     explicit Client(QObject *parent = 0);
     explicit Client(const ClientData &data, QObject *parent = 0);
 

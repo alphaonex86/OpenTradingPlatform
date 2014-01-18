@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     smtp.cpp \
     translationmanager.cpp \
     translationslang.cpp \
-    Request/requestlang.cpp
+    Request/requestlang.cpp \
+    Request/requestlogin.cpp
 
 HEADERS += \
     fundssocket.h \
@@ -59,7 +60,8 @@ HEADERS += \
     smtp.h \
     translationmanager.h \
     translationslang.h \
-    Request/requestlang.h
+    Request/requestlang.h \
+    Request/requestlogin.h
 
 OTHER_FILES += \
     database.sql
