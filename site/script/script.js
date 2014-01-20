@@ -1,6 +1,8 @@
 var Ws,
-	lang;
-	
+	lang,
+	overlay;
+
+$(function(){ // JQuery Dom ready
 
 function checkDepencies(){
 	return (!window.WebSocket);
@@ -17,6 +19,9 @@ if(checkDepencies()){
 	alert("Upgrade your browser to see this page");
 }
 
+/**
+ *  @brief Websocket
+ */
 Ws = (function(){
 	// Address to connect to
 	var address = "ws://127.0.0.1:8080/request";
@@ -252,3 +257,61 @@ lang = (function(){
 			setLang:setLang 
 	};
 }());
+
+/**
+ *  @brief Overlay items
+ **/
+overlay = (function(){
+	var OVERLAY_UNKNOW = -1;
+	var OVERLAY_VISIBLE = 0;
+	var OVERLAY_HIDDEN = 1;
+	
+	var Overlay = function (el){
+		this.el = el;
+		this.state = OVERLAY_UNKNOW;
+		this.timeout = -1;
+	}
+	
+	Overlay.prototype.hide = function(){
+		if(this.el && this.state != OVERLAY_HIDDEN){
+			this.state = OVERLAY_HIDDEN;
+			this.el.style.opacity = "0";
+			
+			var currentOverlay = this;
+			clearTimeout(this.timeout);
+			
+			this.timeout = setTimeout(function(){
+				currentOverlay.el.style.display = "none";
+			},1000);
+			return true;
+		}
+		return false;
+	};
+	
+	Overlay.prototype.show = function(){
+		if(this.el && this.state != OVERLAY_VISIBLE){
+			this.state = OVERLAY_VISIBLE;
+			this.el.style.display = ""; 
+			
+			var currentOverlay = this;
+			clearTimeout(this.timeout);
+			
+			this.timeout = setTimeout(function(){
+				currentOverlay.el.style.opacity = "";
+			},1);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	var mainOverlay = new Overlay($(".overlay")[0]);
+	mainOverlay.hide();
+	
+	return {
+		overlay:Overlay,
+		main: mainOverlay
+	};
+}());
+
+}); // JQuery Dom ready
