@@ -1,8 +1,15 @@
+/**************************************
+ * Author: rrfvtgb                    *
+ *                                    *
+ * Used to represent the SQL database *
+ **************************************/
 #ifndef SQLDATA_H
 #define SQLDATA_H
 
 #include <Qt>
 #include <QString>
+
+
 
 /**
  * @brief For ids
@@ -16,6 +23,9 @@ struct ClientData{
     Identity id;
     QString login;
     QString password;
+    QString emailConfirmId;
+    bool validated;
+    int rank;
 };
 
 #endif // SQLDATA_H

@@ -12,6 +12,9 @@
 
 #include "Request/request.h"
 
+class QSettings;
+class TranslationManager;
+
 class WebsocketHandler : public QObject
 {
     Q_OBJECT
@@ -43,6 +46,9 @@ public:
      */
     SqlHandler* getSqlHandler();
 
+    void setTranslationManager(TranslationManager* langManager);
+    TranslationManager* getTranslationManager();
+
 signals:
 
 public slots:
@@ -56,19 +62,19 @@ public slots:
      * @note will be reworked
      * @param message
      */
-    void processMessage(QString message);
+    void processMessage(QtWebsocket::QWsSocket* socket, QString message);
 
     /**
      * @brief testing stuff
      * @param elapsedTime
      */
-    void processPong(quint64 elapsedTime);
+    void processPong(QtWebsocket::QWsSocket* socket, quint64 elapsedTime);
 
     /**
      * @brief webSocket disconnected
      * @note will be reworked
      */
-    void socketDisconnected();
+    void socketDisconnected(QtWebsocket::QWsSocket* socket);
 
 protected:
     /**
@@ -93,11 +99,20 @@ private:
      */
     SqlHandler* sql;
 
+    /**
+     * @brief Configuration (object)
+     */
+    QSettings* config;
 
     /**
      * @brief The server for web socket
      */
     QtWebsocket::QWsServer* server;
+
+    /**
+     * @brief For all client who aren't logged yet
+     */
+    QList<Client*> _guestClients;
 
     /**
      * @brief Used to get fastly client using their id
@@ -113,6 +128,8 @@ private:
      * @brief Associate a request with their name
      */
     QMap<QString, Request*> requestMap;
+
+    TranslationManager* _langManager;
 };
 
 #endif // WEBSOCKETHANDLE_H

@@ -1,16 +1,21 @@
+#include <QSettings>
+#include <QJsonDocument>
+#include <QJsonObject>
+
 #include "websockethandler.h"
 
+// Request
 #include "Request/requestrefresh.h"
 #include "Request/requestbuy.h"
 #include "Request/requestsell.h"
+#include "Request/requestlang.h"
 
-#include <QJsonDocument>
-#include <QJsonObject>
 
 WebsocketHandler::WebsocketHandler(QObject *parent) :
     QObject(parent)
 {
-
+    this->config = new QSettings();
+    _langManager = NULL;
 }
 
 void WebsocketHandler::addRequest(Request *r)
@@ -30,6 +35,7 @@ void WebsocketHandler::createRequest()
     addRequest(new RequestRefresh());
     addRequest(new RequestBuy());
     addRequest(new RequestSell());
+    addRequest(new RequestLang(_langManager));
 }
 
 void WebsocketHandler::startServer(int port, QtWebsocket::Protocol protocol)
@@ -51,17 +57,23 @@ void WebsocketHandler::processNewConnection()
 {
     QtWebsocket::QWsSocket* clientSocket = server->nextPendingConnection();
 
-    connect(clientSocket, SIGNAL(frameReceived(QString)), this, SLOT(processMessage(QString)));
-    connect(clientSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
-    connect(clientSocket, SIGNAL(pong(quint64)), this, SLOT(processPong(quint64)));
+    Client* client = new Client();
+    client->setWebsocketHandler(this);
+    client->addSocket(clientSocket);
+
+    _guestClients << client;
+
+    connect(client, SIGNAL(frameReceived(QtWebsocket::QWsSocket*,QString)), this, SLOT(processMessage(QtWebsocket::QWsSocket*,QString)));
+    connect(client, SIGNAL(disconnected(QtWebsocket::QWsSocket*)), this, SLOT(socketDisconnected(QtWebsocket::QWsSocket*)));
+    connect(client, SIGNAL(pong(QtWebsocket::QWsSocket*,quint64)), this, SLOT(processPong(QtWebsocket::QWsSocket*,quint64)));
 
     std::cout << tr("Client connected").toStdString() << std::endl;
 }
 
-void WebsocketHandler::processMessage(QString frame)
+void WebsocketHandler::processMessage(QtWebsocket::QWsSocket *socket, QString frame)
 {
-    QtWebsocket::QWsSocket* socket = qobject_cast<QtWebsocket::QWsSocket*>(sender());
-    if (socket == 0)
+    Client* client = dynamic_cast<Client*>(sender());
+    if (socket == 0 || client == NULL)
     {
         return;
     }
@@ -83,32 +95,28 @@ void WebsocketHandler::processMessage(QString frame)
     }else{
         QString request = obj.value("type").toString();
 
-        if(request == "message"){// test only
-            socket->write(frame);// send back the object
-
-        }else if(!this->requestMap.contains(request)){
-            qWarning() << tr("Unknow request %1 from").arg(request) << socket->hostAddress().toString() << frame;
-            socket->abort();
-
-        }else{
+        if(this->requestMap.contains(request)){
             try{
-                this->requestMap.value(request)->handle(NULL,obj);
+                this->requestMap.value(request)->handle(client, obj);
             }catch(InvalidRequestException e){
                 qWarning() << tr("Invalid request from") << socket->hostAddress().toString();
                 socket->abort(e.what());
             }
+        }else{
+            qWarning() << tr("Unknow request %1 from").arg(request) << socket->hostAddress().toString() << frame;
+            socket->abort();
         }
     }
 }
 
-void WebsocketHandler::processPong(quint64 elapsedTime)
+void WebsocketHandler::processPong(QtWebsocket::QWsSocket* socket, quint64 elapsedTime)
 {
     qDebug() << tr("ping: %1 ms").arg(elapsedTime);
+    socket->write(QString("{\"type\":\"Hello World\"}"));
 }
 
-void WebsocketHandler::socketDisconnected()
+void WebsocketHandler::socketDisconnected(QtWebsocket::QWsSocket *socket)
 {
-    QtWebsocket::QWsSocket* socket = qobject_cast<QtWebsocket::QWsSocket*>(sender());
     if (socket == 0)
     {
         return;
@@ -129,4 +137,14 @@ void WebsocketHandler::setSqlHandler(SqlHandler* handler)
 SqlHandler* WebsocketHandler::getSqlHandler()
 {
     return this->sql;
+}
+
+void WebsocketHandler::setTranslationManager(TranslationManager *langManager)
+{
+    _langManager = langManager;
+}
+
+TranslationManager* WebsocketHandler::getTranslationManager()
+{
+    return _langManager;
 }
