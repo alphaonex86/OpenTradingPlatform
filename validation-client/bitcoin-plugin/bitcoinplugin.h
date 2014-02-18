@@ -13,7 +13,11 @@ class BitcoinPlugin : public QObject, public CryptoCurrencyInterface
 public:
     BitcoinPlugin(QObject *parent = 0);
     ~BitcoinPlugin();
-public slots:
+public:
+    virtual bool working();
+    virtual QString getName() const;
+    virtual QString getSymbol() const;/*symbol display*/
+    virtual QString getCurrencyCode() const;/*unit letter code, 3 letter code*/
     virtual double getBitcoinFunds(const QString &address) const;
     /// \return empty is failed
     virtual QString sendBitcoinFunds(const QString &sourceAddress,const QString &destinationAddress,const double &value);

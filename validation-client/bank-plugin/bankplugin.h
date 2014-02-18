@@ -14,7 +14,11 @@ class BankPlugin : public QObject, public BankInterface
 public:
     BankPlugin(QObject *parent = 0);
     ~BankPlugin();
-public slots:
+public:
+    virtual bool working();
+    virtual QString getName() const;
+    virtual QString getSymbol() const;/*symbol display*/
+    virtual QString getCurrencyCode() const;/*unit letter code, 3 letter code*/
     virtual QList<Transaction> getTransactions(const quint32 &page) const;
     virtual bool deposit(double amount,const QString &destination,const QString &comment);
 };

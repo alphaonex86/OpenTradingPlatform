@@ -7,7 +7,28 @@ BankPlugin::BankPlugin(QObject *parent):
 
 BankPlugin::~BankPlugin()
 {
+}
 
+bool BankPlugin::working()
+{
+    return false;
+}
+
+/*symbol display*/
+QString BankPlugin::getSymbol() const
+{
+    return QStringLiteral("$");
+}
+
+/*unit letter code, 3 letter code*/
+QString BankPlugin::getCurrencyCode() const
+{
+    return QStringLiteral("USD");
+}
+
+QString BankPlugin::getName() const
+{
+    return QStringLiteral("Bank X");
 }
 
 QList<Transaction> BankPlugin::getTransactions(const quint32 &page) const

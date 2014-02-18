@@ -10,6 +10,28 @@ BitcoinPlugin::~BitcoinPlugin()
 
 }
 
+bool BitcoinPlugin::working()
+{
+    return false;
+}
+
+/*symbol display*/
+QString BitcoinPlugin::getSymbol() const
+{
+    return QStringLiteral("BTC");
+}
+
+/*unit letter code, 3 letter code*/
+QString BitcoinPlugin::getCurrencyCode() const
+{
+    return QStringLiteral("BTC");
+}
+
+QString BitcoinPlugin::getName() const
+{
+    return QStringLiteral("Bitcoin");
+}
+
 double BitcoinPlugin::getBitcoinFunds(const QString &address) const
 {
     Q_UNUSED(address);
@@ -24,6 +46,3 @@ QString BitcoinPlugin::sendBitcoinFunds(const QString &sourceAddress,const QStri
     return QString();
 }
 
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(BitcoinPlugin, BitcoinPlugin)
-#endif // QT_VERSION < 0x050000

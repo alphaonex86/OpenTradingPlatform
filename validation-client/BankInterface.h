@@ -1,10 +1,6 @@
 #ifndef BANKINTERFACE_H
 #define BANKINTERFACE_H
 
-/**
- * @brief The Interface required to communicate with the bank
- * @note [WIP] used by plugin
- */
 #include <QList>
 #include <QString>
 #include <QDate>
@@ -19,7 +15,11 @@ struct Transaction
 
 class BankInterface
 {
-public slots:
+public:
+    virtual bool working() = 0;
+    virtual QString getName() const = 0;
+    virtual QString getSymbol() const = 0;/*symbol display*/
+    virtual QString getCurrencyCode() const = 0;/*unit letter code, 3 letter code*/
     virtual QList<Transaction> getTransactions(const quint32 &page) const = 0;
     virtual bool deposit(double amount,const QString &destination,const QString &comment) = 0;
 };
