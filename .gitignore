@@ -1,25 +1,9 @@
-# C++ objects and libs
-
-*.slo
-*.lo
-*.o
-*.a
-*.la
-*.lai
-*.so
-*.dll
-*.dylib
-
-# Qt-es
-
-*.pro.user
-*.pro.user.*
-moc_*.cpp
-qrc_*.cpp
-ui_*.h
-Makefile*
-*build-*
-
-# QtCreator
-
-*.autosave
+*.pro.user*
+*build-desktop*
+*.qm
+*build-Desktop-Debug*
+*build-Desktop*
+*Desktop-Debug*
+*Desktop*
+*build*
+*kate-swp
