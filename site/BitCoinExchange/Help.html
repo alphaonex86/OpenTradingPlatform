@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Bitcoin Exchange - Login</title>
+<link rel="stylesheet" type="text/css" href="layout.css"/>
+
+<script type="text/javascript">
+function WebSocketTest()
+{
+  if ("WebSocket" in window)
+  {
+     alert("WebSocket is supported by your Browser!");
+     // Let us open a web socket
+     var ws = new WebSocket("ws://localhost:6000");
+     ws.onopen = function()
+     {
+        // Web Socket is connected, send data using send()
+        ws.send("Message to send");
+        alert("Message is sent...");
+     };
+     ws.onmessage = function (evt) 
+     { 
+        var received_msg = evt.data;
+        alert("Message is received...");
+     };
+     ws.onclose = function()
+     { 
+        // websocket is closed.
+        alert("Connection is closed..."); 
+     };
+  }
+  else
+  {
+     // The browser doesn't support WebSocket
+     alert("WebSocket NOT supported by your Browser!");
+  }
+}
+</script>
+</head>
+
+<body>
+<div class ="box sidebar">
+	<div class="box small endleftfloat">
+    	<p>...</p>
+  </div>
+     <div class="box small">
+    	<p>Latest Trades</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Lowest Trades</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Lowest Sellers</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Highest Buyers</p>
+ 	 </div>
+</div>
+<div class = "box">
+<!--
+  <div class="box small">
+    <p>Home</p>
+  </div>
+  <div  class="box small">
+    <p>Stats</p>
+  </div>
+  <div  class="box small">
+    <p class="seltextcolor">Help</p>
+  </div>
+  <div class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div class="box small">
+    <p>Language</p>
+  </div>
+  <div  class="box small">
+    <p>Login</p>
+  </div>
+  <div  class="box small">
+    <p>Create Account</p>
+  </div>
+  -->
+   <div class="box small seltextcolor">
+    <p><a href="account.html" class="btn btn-large">Account</a></p>
+  </div>
+  <div class="box small seltextcolor">
+    <p><a href="index.html" class="btn btn-large">Home</a></p>
+  </div>
+  <div  class="box small">
+    <p><a href="stats.html" class="btn btn-large">Stats</a></p>
+  </div>
+  <div  class="box small">
+    <p><a href="help.html" class="btn btn-large btn-warning">Help</a></p>
+  </div>
+  <div class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div class="box small">
+    <p><a href="index.html" class="btn btn-large">Language</a></p>
+  </div>
+  <div  class="box small">
+    <p><a href="login.html" class="btn btn-large">Login</a></p>
+  </div>
+  <div  class="box small">
+    <p><a href="signup.html" class="btn btn-large">Create Account</a></p>
+  </div>
+  
+  <div class="box">
+      <div class="gridContainer">
+	      <div class="gridContainerChild">      
+            <nav class="endleftfloat">
+            <a class="menu defmenucolor" href="help\faq.html">Frequently Asked Questions</a><br>
+            <a class="menu menucolor" href="help\fees.html">Fees</a><br>
+            </nav>
+            
+       	 </div>     
+         <div class="gridContainerContent">
+           <h1>Frequently Asked Questions</h1>
+           <div class="box">
+           <h3>Exchange rate & volume</h3>
+           </div>
+           <h3>What is Bitcoin?</h3>
+<p>Bitcoin is an open protocol for online decentralized transactions. In the Bitcoin P2P network, there are transaction processors (nodes called "minors") and nodes that perform transactions using a wallet. Everyone can be an auditor ("minor") and everyone can send and receive bitcoins, without necessarily being a "minor". A bitcoin can be infinitely divided into smaller fractions and be exchanged on the Internet as easily as emails. Since it can be exchanged against a good or service whose price is expressed in bitcoins, it can also be exchanged against other currencies using an online exchange such as bitcoin-exchange.net.</p>
+
+<h3>What is Bitcoin-Exchange?</h3>
+<p>Bitcoin-Exchange is a online exchange where buyers and sellers meet and conclude bitcoins transactions. Vendors offer their bitcoins against the Euro (EUR), and vice versa.</p>
+
+<p>Bitcoin-Exchange is operated by Paymium, a French company based in Paris.</p>
+
+<h3>How do I secure my Bitcoin-Exchange account?</h3>
+<p>You are responsible for your login credentials. We recommend that you use long and complex passwords (more than 8 characters), using uppercase, lowercase, numbers and special characters (i.e: $, & , - , %).</p>
+
+<p>In addition, we recommend that you also install a second authentication factor (Yubikey , Google Authenticator).</p>
+
+<h3>How do I start?</h3>
+<p>First, you must create a Bitcoin-Exchange account and provide proof of identity and residence.</p>
+
+<h3>What documents do I need?</h3>
+<p>We verify your identity upon opening an account.</p>
+
+<p>In the «proﬁle» menu, you need to upload two types of documents:</p>
+<ol>
+<li>a valid non-expired photo ID, front and back</li>
+<li>a proof of residence less than three-month-old (water bill, electricity bill, tax assessment, ...)</li>
+</ol>
+<p>The documents provided must be of good quality. The supported file formats are jpg, png or pdf. Doc, zip, html, or rar are NOT accepted.</p>
+
+<p>Note that the image of the document should not be cut off or edited, and that the document must not be expired and must include your date of birth.</p>
+
+<p>These documents are sent to our bank partner who keeps them and handles validation. Once validated, your files are encrypted and stored securely.</p>
+
+<p>If your documents do not meet these requirements, they will be rejected and validating your account will be delayed until you provide new documents.</p>
+
+<h3>How long does it take to verify my account?</h3>
+<p>The verifications are placed in a queue. It currently takes a week or two, but it may take more or less time depending on the size of the queue.</p>
+
+<h3>How do I fund my Bitcoin-Exchange Euros account?</h3>
+<p>Go to "fund my Euros account" under "account".</p>
+
+<p>You will find the bank details (RIB or BIC + IBAN) for LEMON WAY, the banking partner of PAYMIUM.</p>
+
+<p><b>IMPORTANT</b>: Don't forget to enter your account number BC-XXXXXX in the field "comment" (sometimes called "label") of your wire transfer so that Bitcoin-Exchange can make the connection between the transfer and your BC account to properly credit it.</p>
+
+<h3>How long does it take before my Bitcoin-Exchange is credited after I send a wire transfer?</h3>
+<p>The average delay is between one and two business days.</p>
+
+<p>Once the transfer is received by our banking partner, accounts are credited daily.</p>
+
+<h3>My Bitcoin-Exchange account does not display my wire transfer, what should I do?</h3>
+<p>First, make sure that the specified delay is exceeded. All inquiries will be ignored until that delay is passed.</p>
+
+<p>It is possible that you forgot to enter your Bitcoin-Exchange account number BC-XXXXXX in the comment field of your wire transfer. Go to "help" to send us a support ticket in which you specify all the information about your transfer: Date, Bank, bank details and amount.</p>
+
+<p>We will send this information to our banking partner and your request will be processed manually, thus requiring additional time.</p>
+
+<h3>Can a company open a Bitcoin-Exchange account?</h3>
+<p>Yes. To create a corporate account, you must provide a certificate of company registration less than three-month-old, a copy of the company statutes, and a copy of the ID of an executive named in the documents.</p>
+
+<h3>How to fund my Bitcoin-Exchange bitcoin account?</h3>
+<p>Go to "Fund my Bitcoins account" under "account"</p>
+
+<p>You will find your Bitcoin address to receive bitcoins. Receipt of Bitcoins takes a few minutes and is credited to your account within the same period.</p>
+
+<p><b>IMPORTANT</b> : Make sure that you are on the Bitcoin-Exchange website and that the certificate in the address bar is valid.</p>
+
+<h3>How to buy bitcoins?</h3>
+<p>On Bitcoin-Exchange, once your account is funded in Euros, you can place a buy order for bitcoins. Click on the link "buy bitcoins" under "trade".</p>
+
+<p>Simply fill out the form with limit the maximum price you want to pay your bitcoins. If the price is too low, there may be no seller which has an offer matching with your purchase order. Your order will not be executed immediately. In this case, you have to wait until the sellers lower their prices or review your order with a higher limit price. If your limit is greater than the supply of a seller, the seller's offer will be accepted and your order will be partially or fully executed. The execution is partial if the amount offered by the seller is less than the amount specified in your order. It is possible that your order will be executed by combining several sellers' offers.</p>
+
+<p>In summary, there are three cases:</p>
+<ol>
+<li>Buy order active but not executed: your price limit was too low to match an offer immediately. Wait and review your order.</li>
+<li>Buy order partially executed: your upper price limit was matched by one or more sellers but the amount traded was less than the amount specified in your order. Wait or review your order for the amount not traded immediately.</li>
+<li>Buy order executed in full: your price limit was greater or equal to the cheapest vendors and the amount traded was sufficient to fully satisfy your buy order.
+The trades are permanent and non-voidable, however, if a trade order is pending execution, you can cancel it at any time.</li>
+</ol>
+
+<h3>Can I buy bitcoins with my credit card?</h3>
+<p>For the moment this feature is not available, but we are working on it.</p>
+
+<h3>How long does it take to get bitcoins?</h3>
+<p>Once your account is funded and you have executed trades, your account is immediately credited with the bitcoins you just bought.</p>
+
+<h3>What fees are applied?</h3>
+<p>Bitcoin-Exchange applies a fee on transactions (euros to bitcoins and vice versa). The details the fees can be found under the "help" menu.</p>
+
+<h3>How do I withdraw bitcoins?</h3>
+<p>To withdraw bitcoins, visit the page "withdraw bitcoins" under "account". Enter the amount you want to withdraw and the destination bitcoin address for the transfer.</p>
+
+<h3>How long does it take to withdraw bitcoins?</h3>
+<p>To ensure maximum security, Bitcoin transfers are not processed in real time, but are scheduled once a day from Monday to Friday. Once the transfer is executed by Bitcoin-Exchange, you will receive your bitcoins in minutes.</p>
+
+<h3>How do I withdraw Euros?</h3>
+<p>To withdraw euros, visit the page "withdraw euros" under " account". Enter the amount you want to withdraw to your personal bank account. This is the bank account that you used to fund your account and specified during account registration.</p>
+
+<h3>Is it possible to withdraw Euros to another bank account or exchange?</h3>
+<p>No. Bank transfers are only made ​​to your personal bank account.</p>
+
+<h3>Why are withdrawals in euros limited to 500 €?</h3>
+<p>You can ask us to change the limit: 500 € is the default to protect our customers, especially those who do not use a second authentication factor (Yubikey or Google auth). To change the limit, create a support ticket and simply enter the new limit you want.</p>
+
+<h3>How do I delete my account?</h3>
+<p>You can request termination of your Bitcoin-Exchange account using a support ticket.</p>
+
+<p>Your personal information is kept by the banking partner for a period of seven (7) years. Bitcoin-Exchange destroys your documents but keeps the history of your transactions.</p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box">
+          <p>Graph to be Designed</p>
+        </div>
+    </div>
+      <div class="box aligncentered">
+      		<div class="box">
+            <h3>Table</h3>
+            <table class="table table-bordered"><thead><tr><th>Trend</th><th>Price</th><th>Amount</th><th class="hidden-phone">Total</th></tr></thead><tbody><tr class="trade" data-original-title="" title=""><td class="delta"><i class="icon-minus"></i></td><td class="price">462.15000 €</td><td class="amount">2.50000000 btc</td><td class="total hidden-phone">1,155.37500 €</td></tr><tr class="trade" data-original-title="" title=""><td class="delta"><i class="icon-caret-up"></i></td><td class="price">462.15000 €</td><td class="amount">2.50000000 btc</td><td class="total hidden-phone">1,155.37500 €</td></tr><tr class="trade" data-original-title="" title=""><td class="delta"><i class="icon-caret-down"></i></td><td class="price">462.10000 €</td><td class="amount">4.19116156 btc</td><td class="total hidden-phone">1,936.73576 €</td></tr><tr class="trade" data-original-title="" title=""><td class="delta"><i class="icon-minus"></i></td><td class="price">465.00000 €</td><td class="amount">8.76340000 btc</td><td class="total hidden-phone">4,074.98100 €</td></tr><tr class="trade" data-original-title="" title=""><td class="delta"><i class="icon-minus"></i></td><td class="price">465.00000 €</td><td class="amount">0.20000000 btc</td><td class="total hidden-phone">93.00000 €</td></tr><tr class="trade" data-original-title="" title=""><td class="delta"><i class="icon-minus"></i></td><td class="price">465.00000 €</td><td class="amount">0.64516100 btc</td><td class="total hidden-phone">299.99987 €</td></tr><tr class="trade" data-original-title="" title=""><td class="delta"><i class="icon-minus"></i></td><td class="price">465.00000 €</td><td class="amount">0.05376344 btc</td><td class="total hidden-phone">25.00000 €</td></tr></tbody></table>
+            </div>
+      </div>
+    <div class="box aligncentered">
+      		<div class="box">
+            <h3>100% Cold Storage: the most secure bitcoins.</h3>
+            <p>We apply a 100% cold storage policy on all bitcoins sent to your Bitcoin-Central account.</p>
+            <br/>
+            <p>No bitcoins are stored on customer-facing servers: private keys are held in <b class="seltextcolor">bank vaults located in several cities</b>. We use secret splitting techniques to ensure that no bitcoin can be stolen even if a bank vault is compromised.</p>
+            </div>
+      </div>
+  </div>
+</div>
+<div class="box">
+<center>
+<p>Footer goes here</p>
+</center>
+</div>
+</body>
+</html>

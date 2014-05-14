@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Bitcoin Exchange - Login</title>
+<link rel="stylesheet" type="text/css" href="..\layout.css"/>
+<link rel="stylesheet" type="text/css" href="FontStyle.css"/>
+
+<script type="text/javascript">
+function WebSocketTest()
+{
+  if ("WebSocket" in window)
+  {
+     alert("WebSocket is supported by your Browser!");
+     // Let us open a web socket
+     var ws = new WebSocket("ws://localhost:6000");
+     ws.onopen = function()
+     {
+        // Web Socket is connected, send data using send()
+        ws.send("Message to send");
+        alert("Message is sent...");
+     };
+     ws.onmessage = function (evt) 
+     { 
+        var received_msg = evt.data;
+        alert("Message is received...");
+     };
+     ws.onclose = function()
+     { 
+        // websocket is closed.
+        alert("Connection is closed..."); 
+     };
+  }
+  else
+  {
+     // The browser doesn't support WebSocket
+     alert("WebSocket NOT supported by your Browser!");
+  }
+}
+</script>
+</head>
+
+<body>
+<div class ="box sidebar">
+	<div class="box small endleftfloat">
+    	<p>...</p>
+  </div>
+     <div class="box small">
+    	<p>Latest Trades</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Lowest Trades</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Lowest Sellers</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Highest Buyers</p>
+ 	 </div>
+</div>
+<div class = "box">
+<!--
+  <div class="box small">
+    <p>Home</p>
+  </div>
+  <div  class="box small">
+    <p>Stats</p>
+  </div>
+  <div  class="box small">
+    <p>Help</p>
+  </div>
+  <div class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div class="box small">
+    <p>Language</p>
+  </div>
+  <div  class="box small">
+    <p class="seltextcolor">Profile</p>
+  </div>
+  <div  class="box small">
+    <p>Logout</p>
+  </div>
+  -->
+  
+  <div class="box small seltextcolor">
+    <p><a href="account.html" class="btn btn-large">Account</a></p>
+  </div>
+  <div class="box small seltextcolor">
+    <p><a href="index.html" class="btn btn-large">Home</a></p>
+  </div>
+  <div  class="box small">
+    <p><a href="stats.html" class="btn btn-large">Stats</a></p>
+  </div>
+  <div  class="box small">
+    <p><a href="help.html" class="btn btn-large">Help</a></p>
+  </div>
+  <div class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div class="box small">
+    <p><a href="index.html" class="btn btn-large">Language</a></p>
+  </div>
+  <div  class="box small">
+    <p><a href="thirdpartyapps.html" class="btn btn-large btn-warning">Profile</a></p>
+  </div>
+  <div  class="box small">
+    <p><a href="login.html" class="btn btn-large">Logout</a></p>
+  </div>
+  
+  <div class="box">
+      <div class="gridContainer">
+      	
+	      <div class="gridContainerChild">  
+          <div class="gridContainerChild">
+        <p>Profile Completeness...</p>
+        </div>    
+            <nav class="endleftfloat">
+            <a class="menu menucolor" href="credentials.html">Credentials</a><br>
+            <a class="menu menucolor" href="security.html">Security</a><br>
+            <a class="menu defmenucolor" href="thirdpartyapps.html">3rd party applications</a><br>
+            <a class="menu menucolor" href="closeaccount.html">Close your account</a><br>
+            </nav>
+            
+       	 </div>     
+         <div class="gridContainerContent">
+           <h1>3rd party applications</h1>
+           <h3>Authorized applications</h3>
+           <hr>
+           <label>&nbsp;&nbsp;No Applications yet.</label>
+           <hr>
+           
+           
+         </div>
+      </div>
+      <div class="box">
+      		<div class="box small best-buy-price">
+            <p>Best Buy Price</p>
+            </div>
+            <div class="box small latest-price">
+            <p>Latest Price</p>
+            </div>
+            <div class="box small best-sell-offer">
+            <p>Best Sell Offer</p>
+            </div>
+      </div>
+      <div class="box aligncentered">
+      		<div class="box">
+            <h3>Compliance : Euro payment accounts held by an approved Payment Institution.</h3>
+            <p>Each customer account is linked to a payment account held for you by a <b class="seltextcolor">licensed Payment Institution partner</b>: you send euros to an account owned by you to purchase bitcoins.</p>
+            <br/>
+            <p>Your withdraw requests are transmitted directly to our Payment Institution partner.</p>
+            </div>
+      </div>
+      <div class="box aligncentered">
+      		<div class="box">
+            <h3>100% Cold Storage: the most secure bitcoins.</h3>
+            <p>We apply a 100% cold storage policy on all bitcoins sent to your Bitcoin-Central account.</p>
+            <br/>
+            <p>No bitcoins are stored on customer-facing servers: private keys are held in <b class="seltextcolor">bank vaults located in several cities</b>. We use secret splitting techniques to ensure that no bitcoin can be stolen even if a bank vault is compromised.</p>
+            </div>
+      </div>
+  </div>
+</div>
+<div class="box">
+<center>
+<p>Footer goes here</p>
+</center>
+</div>
+</body>
+</html>

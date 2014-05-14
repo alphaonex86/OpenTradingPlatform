@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Bitcoin Exchange - Login</title>
+<link rel="stylesheet" type="text/css" href="layout.css"/>
+
+<script type="text/javascript">
+function WebSocketTest()
+{
+  if ("WebSocket" in window)
+  {
+     alert("WebSocket is supported by your Browser!");
+     // Let us open a web socket
+     var ws = new WebSocket("ws://localhost:6000");
+     ws.onopen = function()
+     {
+        // Web Socket is connected, send data using send()
+        ws.send("Message to send");
+        alert("Message is sent...");
+     };
+     ws.onmessage = function (evt) 
+     { 
+        var received_msg = evt.data;
+        alert("Message is received...");
+     };
+     ws.onclose = function()
+     { 
+        // websocket is closed.
+        alert("Connection is closed..."); 
+     };
+  }
+  else
+  {
+     // The browser doesn't support WebSocket
+     alert("WebSocket NOT supported by your Browser!");
+  }
+}
+</script>
+</head>
+
+<body>
+<div class ="box sidebar">
+	<div class="box small endleftfloat">
+    	<p>...</p>
+  </div>
+     <div class="box small">
+    	<p>Latest Trades</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Lowest Trades</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Lowest Sellers</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Highest Buyers</p>
+ 	 </div>
+</div>
+<div class = "box">
+
+  <div class="box small">
+    <p>Home</p>
+  </div>
+  <div  class="box small">
+    <p>Stats</p>
+  </div>
+  <div  class="box small">
+    <p>Help</p>
+  </div>
+  <div class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div class="box small">
+    <p>Language</p>
+  </div>
+  <div  class="box small">
+    <p>Login</p>
+  </div>
+  <div  class="box small">
+    <p class="seltextcolor">Create Account</p>
+  </div>
+  
+  <div class="box">
+      <div class="gridContainer">
+	      <div class="gridContainerChild">      
+            <nav class="endleftfloat">
+            <a class="menu defmenucolor" href="signup.html">Credentials</a><br>
+            <a href="sign-up/2.html">Confirmation</a><br>
+            </nav>
+            
+       	 </div>     
+         <div class="gridContainerContent">
+           <h1>Sign up</h1>
+           <form method="post" action="">
+           		<fieldset>
+                    <label>Account Type<br/></label>
+                    <input id="accounttype" name="accounttype" type="radio" value="Personal">Personal
+					<input id="accounttype" name="accounttype" type="radio" value="Corporate">Corporate
+                    <label><br/><br/>Email or Account Number:<br/></label>
+                    <input id="name" name="name" type="text" required="required">
+                    <label><br/>Password:<br/></label>
+                    <input id="pwd" name="pwd" type="password" required="required">
+                    <label><br/>Confirm Password<br/></label>
+                    <input id="confpwd" name="confpwd" type="password" required="required">
+                    <br/><br/>
+                    <p>Are you human?</p>
+                    <fieldset>
+                    <img id="recaptcha_challenge_image" alt="reCAPTCHA challenge image" height="57" width="300" src="https://www.google.com/recaptcha/api/image?c=03AHJ_Vuu9fJLir6MSfA5pRmOvCVgohMe3w0lFBr-IR0X8R2Wstv1cOSkpUgrzHCul23nO61In-aX1scnMnwp9KRXV5Yv8sHVZBdYRbJz5HbUVrRY8RUTnyrgtpGB7wIQhzWDOau_Mro0XNhesr79CalfjGC_ey0VxXP1CjV7nodUhs3-6vFPdlybyyE5cs6FHTWg8Y1ePNYILyLbJqTJbkHg_FNCciEd8lREO0qg3yQXiNvzCzJtJUjo">
+                    </fieldset>
+                </fieldset>
+                <p/>
+                <button type="submit">Next</button>
+           </form>
+           
+         </div>
+      </div>
+      <div class="box">
+      		<div class="box small best-buy-price">
+            <p>Best Buy Price</p>
+            </div>
+            <div class="box small latest-price">
+            <p>Latest Price</p>
+            </div>
+            <div class="box small best-sell-offer">
+            <p>Best Sell Offer</p>
+            </div>
+      </div>
+      <div class="box aligncentered">
+      		<div class="box">
+            <h3>Compliance : Euro payment accounts held by an approved Payment Institution.</h3>
+            <p>Each customer account is linked to a payment account held for you by a <b class="seltextcolor">licensed Payment Institution partner</b>: you send euros to an account owned by you to purchase bitcoins.</p>
+            <br/>
+            <p>Your withdraw requests are transmitted directly to our Payment Institution partner.</p>
+            </div>
+      </div>
+      <div class="box aligncentered">
+      		<div class="box">
+            <h3>100% Cold Storage: the most secure bitcoins.</h3>
+            <p>We apply a 100% cold storage policy on all bitcoins sent to your Bitcoin-Central account.</p>
+            <br/>
+            <p>No bitcoins are stored on customer-facing servers: private keys are held in <b class="seltextcolor">bank vaults located in several cities</b>. We use secret splitting techniques to ensure that no bitcoin can be stolen even if a bank vault is compromised.</p>
+            </div>
+      </div>
+  </div>
+</div>
+<div class="box">
+<center>
+<p>Footer goes here</p>
+</center>
+</div>
+</body>
+</html>

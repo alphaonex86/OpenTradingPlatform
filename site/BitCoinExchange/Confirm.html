@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Bitcoin Exchange - Login</title>
+<link rel="stylesheet" type="text/css" href="layout.css"/>
+
+<script type="text/javascript">
+function WebSocketTest()
+{
+  if ("WebSocket" in window)
+  {
+     alert("WebSocket is supported by your Browser!");
+     // Let us open a web socket
+     var ws = new WebSocket("ws://localhost:6000");
+     ws.onopen = function()
+     {
+        // Web Socket is connected, send data using send()
+        ws.send("Message to send");
+        alert("Message is sent...");
+     };
+     ws.onmessage = function (evt) 
+     { 
+        var received_msg = evt.data;
+        alert("Message is received...");
+     };
+     ws.onclose = function()
+     { 
+        // websocket is closed.
+        alert("Connection is closed..."); 
+     };
+  }
+  else
+  {
+     // The browser doesn't support WebSocket
+     alert("WebSocket NOT supported by your Browser!");
+  }
+}
+</script>
+</head>
+
+<body>
+<div class ="box sidebar">
+	<div class="box small endleftfloat">
+    	<p>...</p>
+  </div>
+     <div class="box small">
+    	<p>Latest Trades</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Lowest Trades</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Lowest Sellers</p>
+ 	 </div>
+     <div class="box small">
+    	<p>Highest Buyers</p>
+ 	 </div>
+</div>
+<div class = "box">
+
+  <div class="box small">
+    <p>Home</p>
+  </div>
+  <div  class="box small">
+    <p>Stats</p>
+  </div>
+  <div  class="box small">
+    <p>Help</p>
+  </div>
+  <div class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div  class="box small">
+    <p></p>
+  </div>
+  <div class="box small">
+    <p>Language</p>
+  </div>
+  <div  class="box small">
+    <p>Login</p>
+  </div>
+  <div  class="box small">
+    <p class="seltextcolor">Create Account</p>
+  </div>
+  
+  <div class="box">
+      <div class="gridContainer">
+	      <div class="gridContainerChild">      
+            <nav class="endleftfloat">
+            <a class="menu defmenucolor" href="signup.html">Credentials</a><br>
+            <a href="confirm.html">Confirmation</a><br>
+            </nav>
+            
+       	 </div>     
+         <div class="gridContainerContent">
+           <h1>Welcome to Bitcoin Exchange!</h1>
+           <p>Congratulations, you have successfully signed up.</p>
+           <p>You will promptly receive an email to confirm your account.</p>
+           <p>If you do not receive our confirmation email in your inbox within minutes, please do not forget to check your spam folder as well.</p>           
+         </div>
+      </div>
+  </div>
+</div>
+<div class="box">
+<center>
+<p>Footer goes here</p>
+</center>
+</div>
+</body>
+</html>
