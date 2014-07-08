@@ -5,25 +5,143 @@
 <title>Bitcoin Exchange - Login</title>
 <link rel="stylesheet" type="text/css" href="layout.css"/>
 
-<script type="text/javascript">
-function Login()
+<script type="text/javascript" src="jquery-2.1.1.js"> </script>
+<script type="text/javascript" language="javascript"> //  src = "jquery.websocket-0.0.1.js"
+
+
+$(document).ready(function(){
+    //Open a WebSocket connection.
+   //alert ( "Hello, jQuery" ) ;
+   ws = new WebSocket("ws://127.0.0.1:6000");  
+     //Send a Message
+   $('#Login').click(function(){ 
+	
+	 //var wsUri = "ws://127.0.0.1:6000" ; //"ws://localhost:9000/daemon.php";   
+    //ws = new WebSocket("ws://127.0.0.1:6000"); 
+    
+    //Connected to server
+    ws.onopen = function(ev) {
+        //alert('Connected to server ');
+		
+		//ws.send("Processing Login");
+        //alert("Logging in...");
+		var LoginOperation = "1801" ;
+		//var userid = document.getElementById( name ).value( ) ;
+		//var pwd = document.getElementById( pwd ).value( ) ;
+		//alert ( "Sending the Data..." ) ;
+		//ws.send( LoginOperation ) ;
+		//alert( #name ) ;
+		
+		var $items = $( '#name, #pwd') ;
+		var LoginObj = {  } //LoginOperation: "1801"
+		$items.each(function() {
+			LoginObj[this.id] = $(this).val();
+		})
+		
+		var Operation = { 'LoginOperation': LoginOperation } ;
+		var Credentials = { } ;
+		//Credentials = JSON.parse ( Operation ).concat ( JSON.parse ( LoginObj ) ) ;
+		$.extend( true, Operation, LoginObj ) ;
+		//JSON.parse( jsonOperation ).concat( LoginObj ) ;
+		var json = JSON.stringify( Operation ) ;//Credentials LoginObj
+		
+		
+		//Send the Login Message to WebSocket Server
+		//alert ( "Sending the Data..." ) ;
+		ws.send( json ) ;
+    }
+    
+    //Connection close
+    ws.onclose = function(ev) { 
+        alert('Disconnected');
+    };
+    
+    //Message Receved
+    //ws.onmessage = function(ev) { 
+//        alert('Message '+ev.data);
+//    };
+    
+    //Error
+    ws.onerror = function(ev) { 
+        alert('Error '+ev.data);
+    };
+        //var mymessage = 'This is a test message'; 
+        //websocket.send(mymessage);
+		
+		// Web Socket is connected, send data using send()
+       /* ws.send("Processing Login");
+        alert("Logging in...");
+		var LoginOperation = "01801" ;
+		//var userid = document.getElementById( name ).value( ) ;
+		//var pwd = document.getElementById( pwd ).value( ) ;
+		alert ( "Sending the Data..." ) ;
+		ws.send( LoginOperation ) ;
+		//alert( #name ) ;
+		
+		var $items = $('#name, #pwd') ;
+		var LoginObj = {  } //LoginOperation: "1801"
+		$items.each(function() {
+			LoginObj[this.id] = $(this).val();
+		})
+		
+		var json= JSON.stringify( LoginObj ) ;
+		
+		//Send the Login Message to WebSocket Server
+		alert ( "Sending the Data..." ) ;
+		ws.send( json ) ;*/
+    }); //click( ) ends
+	
+	
+}); //ready( ) ends
+//$(document).bind ( ws.onmessage, function ( ev ) {
+////$(document).bind ( 
+//		//Message Receved
+//        alert ( 'Message '+ ev.data ) ;
+//    } ) ; //bind ends
+
+
+
+function OldLogin()
 {
   if ("WebSocket" in window)
   {
      alert("WebSocket is supported by your Browser!");
      // Let us open a web socket
-     var ws = new WebSocket("ws://localhost:6000");
+     var ws = new WebSocket("ws://127.0.0.1:6000"); //new WebSocket("ws://localhost:6000"); //$.websocket
      ws.onopen = function()
      {
+		
         // Web Socket is connected, send data using send()
-        ws.send("Processing Login");
-        alert("Logging in...");
+        //ws.send("Processing Login");
+        //alert("Logging in...");
+		var LoginOperation = "01801" ;
+		//var userid = document.getElementById( name ).value( ) ;
+		//var pwd = document.getElementById( pwd ).value( ) ;
+		//alert ( "Sending the Data..." ) ;
+		//ws.send( LoginOperation ) ;
+		//alert( #name ) ;
+		
+		var $items = $('#name, #pwd') ;
+		var LoginObj = {  } //LoginOperation: "1801"
+		$items.each(function() {
+			LoginObj[this.id] = $(this).val();
+		})
+		
+		var json= JSON.stringify( LoginObj ) ;
+		
+		//Send the Login Message to WebSocket Server
+		//alert ( "Sending the Data..." ) ;
+		ws.send( json ) ;
      };
 	 
      ws.onmessage = function (evt) 
      { 
         var received_msg = evt.data;
         alert("Message is received...");
+		
+		ParseReplyData = function ( msg )
+		{
+		} ;
      };
      ws.onclose = function()
      { 
@@ -136,10 +254,10 @@ function Login()
                     <label>Email or Account Number:<br/></label>
                     <input id="name" name="name" type="text" required="required">
                     <label><br/>Password:<br/></label>
-                    <input id="pwd" name="pwd" type="text" required="required">
+                    <input id="pwd" name="pwd" type="password" required="required">
                 </fieldset>
-                <p/>
-                <button type="submit" onClick="javascript:Login( )">Login</button>
+                <!--<p/> -->
+                <button id="Login" type="submit">Login</button> <!--onClick="Login()" -->
            </form>
            
          </div>
