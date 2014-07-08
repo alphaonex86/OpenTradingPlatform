@@ -9,15 +9,8 @@
 
 #include "configfunctions.h"
 
-QSqlDatabase* SqlHandler::database = NULL ;
-
 SqlHandler::SqlHandler()
 {
-}
-
-QSqlDatabase * SqlHandler::GetDatabaseHandler( )
-{
-    return database ;
 }
 
 bool SqlHandler::loadConfig(QString filename)
@@ -30,19 +23,18 @@ bool SqlHandler::loadConfig(QString filename)
     }
 
     // Open a new database connection with data in the config file
-    database =  new QSqlDatabase(QSqlDatabase::addDatabase(getConfigStringValue(config, "database/type", "QMYSQL")));
+    database =  new QSqlDatabase(QSqlDatabase::addDatabase(getConfigStringValue(config, "database/type", "QMySql")));
 
     database->setConnectOptions(getConfigStringValue(config, "database/connectOptions", ""));
     database->setHostName(      getConfigStringValue(config, "database/host",           "localhost"));
-    database->setDatabaseName(  getConfigStringValue(config, "database/database",       "bitcoinexchange"));
+    database->setDatabaseName(  getConfigStringValue(config, "database/database",       "OpenTradingPlatform"));
     database->setUserName(      getConfigStringValue(config, "database/user",           "root"));
-    database->setPassword(      getConfigStringValue(config, "database/password",       "mysql"));
-    database->setPort( QString ( getConfigStringValue(config, "database/port",       "3307" ) ).toInt( ) ) ;
+    database->setPassword(      getConfigStringValue(config, "database/password",       ""));
 
     if(database->open())
     {
         // Default Table file
-        QFile script(":/script/database/database.sql"); //To be Changed, when verified manually
+        QFile script(":/script/database/database.sql");
 
         QSqlQuery* query = new QSqlQuery(script.readAll(), *database);
         query->exec();

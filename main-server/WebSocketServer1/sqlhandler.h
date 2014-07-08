@@ -36,9 +36,6 @@ public:
      * @throw SqlInvalidInputException on invalid login/password
      */
     ClientData getClient(QString login, QString password);
-    
-    //NKR
-    static QSqlDatabase * GetDatabaseHandler( ) ;
 
 private:
     /**
@@ -51,7 +48,7 @@ private:
     /**
      * @brief The database used by the main server
      */
-    static QSqlDatabase* database;
+    QSqlDatabase* database;
 };
 
 #endif // SQLHANDLER_H

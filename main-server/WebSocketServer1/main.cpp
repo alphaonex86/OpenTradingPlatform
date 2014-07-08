@@ -9,6 +9,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
+    BCWebSocketServer server ( 6000 ) ;
+
     TranslationManager* langManager = new TranslationManager();
     langManager->loadConfig("lang.ini");
 
@@ -17,8 +19,6 @@ int main(int argc, char *argv[])
 
     SqlHandler* sqlHandler = new SqlHandler();
     sqlHandler->loadConfig("config.ini");
-
-    BCWebSocketServer server ( 6000 ) ;
 
    Q_UNUSED( server ) ;
 

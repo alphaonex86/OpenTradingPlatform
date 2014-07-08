@@ -67,7 +67,6 @@ public:
 
     explicit BCWebSocketServer(quint16 port, QObject *parent = Q_NULLPTR);
     virtual ~BCWebSocketServer();
-    void SetDatabase( ) ;
 
 private Q_SLOTS:
     void onNewConnection();

@@ -29,9 +29,7 @@ SOURCES += main.cpp \
     translationmanager.cpp \
     translationslang.cpp \
     Request/requestlang.cpp \
-    Request/requestlogin.cpp \
-    CommandProcessor.cpp \
-    CommandAssociates.cpp
+    Request/requestlogin.cpp
 
 HEADERS += \
     BCWebSocketServer.h \
@@ -48,13 +46,10 @@ HEADERS += \
     translationmanager.h \
     translationslang.h \
     Request/requestlang.h \
-    Request/requestlogin.h \
-    CommandProcessor.h \
-    CommandAssociates.h
+    Request/requestlogin.h
 
 OTHER_FILES += \
-    #database.sql
-    BitcoinExchange.sql
+    database.sql
 
 RESOURCES += \
     Resource.qrc

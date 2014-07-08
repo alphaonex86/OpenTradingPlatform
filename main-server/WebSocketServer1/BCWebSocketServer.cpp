@@ -47,11 +47,6 @@
 #include <QtNetwork/QSslKey>
 //#include <./localhost.cert>
 
-#include "CommandProcessor.h"
-//#include "CommandAssociates.h"
-
-#include <QJsonDocument>
-
 QT_USE_NAMESPACE
 
 //! [constructor]
@@ -150,68 +145,11 @@ void BCWebSocketServer::onNewConnection()
 //! [processTextMessage]
 void BCWebSocketServer::processTextMessage(QString message)
 {
-    QJsonValue jVal ;
-//    int msgId = 1801 ;
-    QJsonParseError err ;
-    QByteArray qArr ;
-
-    qArr = message.toUtf8( ) ;
-    QJsonDocument jDoc = QJsonDocument::fromJson ( qArr, &err ) ;
-
-    if ( jDoc.isObject( ) )
-    {
-        QJsonObject jObj ;
-        jObj = jDoc.object( ) ;
-
-        QJsonObject::iterator itr = jObj.find ( "LoginOperation" ) ;
-        if ( itr == jObj.end( ) )
-        {
-            // object not found.
-        }
-        else if ( jObj.contains( "name" ) )
-        {
-            qDebug( ) << "Contains the Name String in JSON Object String" ;
-            jVal = itr.value( ) ;
-
-            qDebug( ) << jVal ;
-        }
-    }
-
-    QString msgId = jVal.toString( )/*1801*/ ;
-    CCmdMessage *pCmdMsg ;
-    CCommandProcessor *pCmdProc ;
-
-    //QJsonDocument::toJson()fromRawData()
-
-    switch ( msgId.toInt( ) )
-    {
-        case 1801: //Login Message
-            pCmdMsg = new CLoginCmdMessage ( message ) ;
-            //pCmdMsg ->ParseCommandParams( ) ;
-
-            pCmdProc = new CLoginProcessor( );
-            qDebug( ) << "Login is Processed" ;
-            pCmdProc ->ParseCommand ( pCmdMsg ) ;
-            pCmdProc ->Process( ) ;
-            break ;
-//    default :
-    }
-
-//    CCmdMessage objMsg ( message ) ;
-//    objMsg.ParseCommandParams( ) ;
-//    CCommandProcessor *pCmdProc ;
-
-    //CCommand &objCmd = pCmdProc ->ParseCommand ( pCmdMsg/*&objMsg*/ ) ; //objCmd can be removed during Refactoring Code
-//    pCmdProc ->Process( &objCmd );
-
-//    CCmdResult &objCmdResult = pCmdProc ->GetCmdResult( ) ;
-
     qDebug() << message ;
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (pClient)
     {
-        pClient->sendTextMessage("Hello");
-        pClient ->sendTextMessage( /*reinterpret_cast< const QString & >(*/ pCmdProc ->GetCmdResult( ).GetCmdResult( ) /*)*/ ) ;
+        pClient->sendTextMessage(message);
     }
 }
 //! [processTextMessage]
@@ -219,7 +157,6 @@ void BCWebSocketServer::processTextMessage(QString message)
 //! [processBinaryMessage]
 void BCWebSocketServer::processBinaryMessage(QByteArray message)
 {
-    qDebug() << message ;
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (pClient)
     {
